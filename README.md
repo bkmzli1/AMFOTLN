@@ -42,13 +42,19 @@ _____
 на этом подготовка закончилась
 ## 3.2 Импорт проекта
 
-1. Нажмите Get from Version Control
-1. На сайте нажимаем Clone or download и копируем ссылку https://github.com/bkmzli1/AMFOTLN.git
-1. Скопированную ссылку вставляем в поле URL и нажимаем clone
+1. Нажмите Get from Version Control (Рисунок 1)
+1. На сайте нажимаем Clone or download и копируем ссылку https://github.com/bkmzli1/AMFOTLN.git (Рисунок 2)
+1. Скопированную ссылку вставляем в поле URL и нажимаем clone (Рисунок 3)
 1. При клонировании могут возникать вопросы выбираем нужный как вы считает это индивидуально
 1. После чего должна пойти настройка проекта в случаи если этого не произошло то открываем файл build.gradle и зажимаем сочетание ```Ctrl+Shift+F10```
 1. Открываем файл по пути ```src/main/java/ru/bkmz/tehSistem/Main``` и зажимаем сочетание ```Ctrl+Shift+F10```
-1. Поздравляем проект успешно импортирован
+1. Поздравляем проект успешно импортирован  
+`Рисунок 1`     
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/1.png?raw=true "Рисунок 1")     
+`Рисунок 2` 
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/2.png?raw=true "Рисунок 2")       
+`Рисунок 3`  
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/3.png?raw=true "Рисунок 3")     
 _____
 [:arrow_up:Оглавление](#Оглавление)
 _____
