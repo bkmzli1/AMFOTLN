@@ -37,13 +37,13 @@ _____
 _____
 # Установка проекта
 ## 3.1 Подготовка
-1. Устанавливаем [JDK](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html)
+1. Устанавливаем [***JDK***](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html)
 1. Установите [***IntelliJ IDEA*** ](https://www.jetbrains.com/idea/)
 на этом подготовка закончилась
 ## 3.2 Импорт проекта
 
 1. Нажмите Get from Version Control (Рисунок 1)
-1. На сайте нажимаем Clone or download и копируем ссылку https://github.com/bkmzli1/AMFOTLN.git (Рисунок 2)
+1. На сайте нажимаем Clone or download и копируем ссылку [***AMFOTLN***](https://github.com/bkmzli1/AMFOTLN) (Рисунок 2)
 1. Скопированную ссылку вставляем в поле URL и нажимаем clone (Рисунок 3)
 1. При клонировании могут возникать вопросы выбираем нужный как вы считает это индивидуально
 1. После чего должна пойти настройка проекта в случаи если этого не произошло то открываем файл build.gradle и зажимаем сочетание ```Ctrl+Shift+F10```
