@@ -1,0 +1,126 @@
+.root {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -my-highlight-color: rgba(0, 0, 0, 0);
+    -my-hover-color: derive(-fx-background, -15%);
+    -my-armed-color: derive(-fx-background, -27%);
+}
+
+.menu-bar {
+    -fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), -35, 0, 0, 0);
+}
+
+#menu {
+    -fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), -35, 0, 0, 0);
+}
+
+#text {
+    -fx-font-size: 20;
+    /* -fx-font-family: "Arial Black";*/
+
+    -fx-fill: #000000;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
+    /*-fx-font-weight: 900;*/
+
+
+}
+
+.text-area {
+    -fx-font-size: 15;
+    /* -fx-font-family: "Arial Black";*/
+
+    -fx-fill: #000000;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
+    /*-fx-font-weight: 900;*/
+
+
+}
+
+.text-field {
+    -fx-font-size: 15;
+    /* -fx-font-family: "Arial Black";*/
+
+    -fx-fill: #000000;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
+    /*-fx-font-weight: 900;*/
+
+}
+
+.text {
+    -fx-font-size: 15;
+    /* -fx-font-family: "Arial Black";*/
+
+    -fx-fill: #000000;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
+    /*-fx-font-weight: 900;*/
+
+}
+
+.menu-bar {
+
+    -fx-font-size: 15;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #373737;
+    -fx-effect: innershadow(three-pass-box, rgb(143, 143, 143), 50, 0, 0, 5);
+}
+
+.menu-bar .text {
+    -fx-font-size: 15;
+    -fx-font-family: "Arial Black";
+
+    -fx-fill: #000000;
+    -fx-effect: innershadow(three-pass-box, rgb(82, 82, 82), 22, 0.0, 0, 22);
+
+
+}
+
+#OUT {
+
+}
+
+.tooltip {
+    -fx-font-size: 15;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #002932;
+
+}
+
+.tooltip .text {
+    -fx-fill: #ff001f;
+
+}
+
+
+#OUT {
+
+}
+
+.tooltip {
+    -fx-font-size: 15;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #002932;
+}
+
+.tooltip .text {
+    -fx-fill: #ff001f;
+
+}
+
+
+.button {
+    -fx-background-color: -fx-background;
+    -fx-border-color: derive(-fx-background, -50%);
+    -fx-border-width: .6;
+}
+
+.button:hover {
+    -fx-background-color: -my-hover-color;
+    -fx-border-color: derive(-fx-background, -25%);
+    -fx-border-width: .55; /*Overide modena.css effect of button highlighting*/
+}
+
+.button:armed {
+    -fx-background-color: -my-armed-color;
+    -fx-border-color: derive(-fx-background, -50%);
+    -fx-border-width: .55; /*Overide modena.css effect of button highlighting*/
+}

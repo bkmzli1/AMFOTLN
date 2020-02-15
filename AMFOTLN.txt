@@ -1,0 +1,726 @@
+package ru.bkmz.tehSistem;
+
+import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.bkmz.tehSistem.data.Data;
+import ru.bkmz.tehSistem.util.gui.window.Notification;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Objects;
+
+public class Main extends Application {
+
+    public static ArrayList<String> list = new ArrayList<>();
+    public static Stage stage = new Stage();
+    final String name = "AMFOTLN";
+    public static final Logger logger = LogManager.getLogger();
+
+    public static void main(String[] args) throws IOException {
+        logger.info("start:launch");
+        launch(args);
+    }
+
+    @Override
+    public void init() {
+        logger.info("start:init");
+        try {
+            Data.load();
+        } catch (Exception e) {
+            File file = new File(Data.fileSave);
+            try {
+                Data.fiStream.close();
+                Data.oiStream.close();
+            } catch (IOException ex) {
+                logger.fatal(ex);
+            }
+
+            if (file.delete()) {
+                new Notification("Глобальная ошибка", "Фаил повреждён\n" +
+                        "Данные ввернутся к зоводским настройкам");
+            } else {
+                new Notification("Глобальная  ошибка", "Фаил повреждён\n" +
+                        "Не удолось удалить файл.\n" +
+                        "Удалите данный фаил \"" + Data.fileSave + "\".\n" +
+                        "Программа завершится через 20 секунд.");
+                logger.fatal("Фатальная ошибка", e);
+                try {
+                    Thread.sleep(20000);
+                } catch (InterruptedException ex) {
+                    logger.fatal(ex);
+                }
+                System.exit(1);
+            }
+
+        }
+        logger.info("stop:init");
+    }
+
+    @Override
+    public void start(Stage stage)  {
+        logger.info("start loader FXML");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/main.fxml")));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            logger.warn("load fxml", e);
+        }
+        Parent root = loader.getRoot();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource("css/main.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.setTitle(name);
+        InputStream inputStream = ClassLoader.class.getResourceAsStream("/img/icon.png");
+        try {
+            Image image = new Image(inputStream);
+            stage.getIcons().add(image);
+        } catch (NullPointerException e) {
+            logger.warn("img null");
+        }
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+        stage.show();
+        //this.follScren = stage.isMaximized();
+        //stage.setResizable(resizable);
+        logger.info("stop loader FXML");
+    }
+}
+package ru.bkmz.tehSistem.controller;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.bkmz.tehSistem.Main;
+import ru.bkmz.tehSistem.data.Data;
+import ru.bkmz.tehSistem.util.CmdHandler;
+import ru.bkmz.tehSistem.util.gui.elements.ItemGetMainController;
+import ru.bkmz.tehSistem.util.gui.window.Notification;
+import ru.bkmz.tehSistem.util.gui.window.StageDialog;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import static ru.bkmz.tehSistem.util.CmdHandler.cmdOut;
+
+public class ControllerMain {
+    public static final Logger logger = LogManager.getLogger();
+    public ListView<HBox> listIpGet;
+    public TextField fileOUT;
+    public TextField fileIN;
+    public ComboBox discList;
+    public HBox panelHboxTool;
+    public AnchorPane rootAP;
+    public static Circle lite = new Circle(7);
+    public CheckBox IE;
+    ArrayList<String> arrayIP = Data.IP_LIST.getValuetAL();
+    ObservableList<HBox> hBoxObservableList = FXCollections.observableArrayList();
+    ObservableList<String> AZList = FXCollections.observableArrayList();
+    public static ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+    public static ArrayList<String> checkBoxesBoolean = new ArrayList<>();
+    public static ItemGetMainController itemGetMainController;
+    public static Text proces = new Text("готов к работе");
+    public static int sizeEnd = 0;
+
+    public void initialize() {
+        logger.info("start initialize FXML ");
+
+        lite.setFill(Color.rgb(0, 250, 0));
+        lite.setStroke(Color.rgb(0, 0, 0));
+        lite.setStrokeWidth(1);
+        //HBox.setMargin(proces,new Insets(0,15,0,0));
+        panelHboxTool.getChildren().add(proces);
+        panelHboxTool.getChildren().add(lite);
+        fileIN.setText(Data.IN_FILE.getValuetS());
+        fileOUT.setText(Data.OUT_FILE.getValuetS());
+        itemGetMainController = new ItemGetMainController(listIpGet, fileOUT, fileIN, hBoxObservableList, threads);
+        for (int i = 65; i <= 90; i++) {
+            AZList.add(String.valueOf((char) i));
+        }
+
+        discList.setItems(AZList);
+        discList.setValue(Data.DISK.getValuetS());
+        for (String s :
+                arrayIP) {
+
+            HBox hBox = new HBox(10);
+            CheckBox checkBox = new CheckBox(s);
+            hBox.getChildren().addAll(checkBox);
+            checkBoxes.add(checkBox);
+            hBoxObservableList.add(hBox);
+            listIpGet.setItems(hBoxObservableList);
+        }
+        checkBoxesBoolean = Data.CBB.getValuetAL();
+        for (int i = 0; i < checkBoxesBoolean.size(); i++) {
+            checkBoxes.get(i).setSelected(Boolean.parseBoolean(checkBoxesBoolean.get(i)));
+        }
+        logger.info("stop initialize FXML ");
+    }
+
+    static ArrayList<Thread> threads = new ArrayList<>();
+
+    public void copi(ActionEvent actionEvent) {
+        try {
+
+            boolean threadRuntime = false;
+            for (Thread t :
+                    threads) {
+                if (t.isAlive()) {
+                    threadRuntime = true;
+                    break;
+                }
+            }
+            if (!threadRuntime) {
+                lite.setFill(Color.rgb(250, 250, 0));
+                sizeEnd = 0;
+                threads.clear();
+                CmdHandler cmdHandler = new CmdHandler();
+                for (CheckBox cb :
+                        checkBoxes) {
+                    String cbTxt = cb.getText(), discListTxt = discList.getValue().toString().toLowerCase(), fileOUText = fileOUT.getText();
+                    if (cb.isSelected()) {
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    logger.info("start ip:" + cbTxt);
+                                    Runtime rt = Runtime.getRuntime();
+                                    Process proc = rt.exec("cmd.exe /c mkdir \\\\" + cbTxt + "\\" + discListTxt + "$\\" + fileOUText);
+                                    proc.waitFor();
+                                    if (IE.isSelected()) {
+                                        cmdOut(proc, cbTxt + " создание папки:" + fileOUText, IE);
+                                    }
+                                    cmdHandler.cmdRun(fileIN.getText(), cbTxt, discListTxt + "$", fileOUText, IE);
+
+                                } catch (Exception e) {
+                                    new Notification("Ошибка:" + cbTxt, e.getMessage(), Alert.AlertType.ERROR);
+                                    logger.warn("cmd error", e);
+                                }
+                            }
+                        });
+                        threads.add(thread);
+                        thread.start();
+                        proces.setText("завершено " + sizeEnd + "/" + threads.size());
+                    }
+                }
+            } else {
+                new Notification("Ошибка", "Ещё есть не завершённые процес(ы)\n" +
+                        "Осталось:" + (threads.size() - sizeEnd), Alert.AlertType.ERROR);
+            }
+            if (sizeEnd >= threads.size()) {
+                proces.setText("готов к работе");
+                lite.setFill(Color.rgb(0, 250, 0));
+
+            }
+        } catch (Exception e) {
+            logger.warn("cmd error", e);
+            proces.setText("неизвестная ошибка");
+            lite.setFill(Color.rgb(250, 0, 0));
+            lite.setStroke(Color.rgb(100, 0, 0));
+        }
+    }
+
+    public static void addProcent() {
+        sizeEnd++;
+        proces.setText("завершено " + sizeEnd + "/" + threads.size());
+        if (sizeEnd >= threads.size()) {
+            proces.setText("готов к работе");
+            lite.setFill(Color.rgb(0, 250, 0));
+
+        }
+    }
+
+    public void settings(ActionEvent actionEvent) {
+        checkBoxes.clear();
+        new StageDialog("settings");
+
+    }
+
+    public void saveButton(ActionEvent actionEvent) {
+        Data.IN_FILE.setValue(fileIN.getText());
+        Data.OUT_FILE.setValue(fileOUT.getText());
+        Data.DISK.setValue(discList.getValue().toString());
+        checkBoxesBoolean.clear();
+        for (CheckBox cb :
+                checkBoxes) {
+            checkBoxesBoolean.add(String.valueOf(cb.isSelected()));
+
+        }
+        Data.CBB.setValue(checkBoxesBoolean);
+        Data.save();
+    }
+
+    public void auther(ActionEvent actionEvent) {
+        new StageDialog("info");
+    }
+
+    public void fileDesctop(ActionEvent actionEvent) {
+        FileChooser dialog = new FileChooser();
+        File file = dialog.showOpenDialog(ru.bkmz.tehSistem.Main.stage);
+        if (file != null)
+            fileIN.setText(String.valueOf(file));
+    }
+
+    public void desctop(ActionEvent actionEvent) {
+        DirectoryChooser dialog = new DirectoryChooser();
+        File file = dialog.showDialog(Main.stage);
+        if (file != null)
+            fileIN.setText(String.valueOf(file));
+    }
+}
+package ru.bkmz.tehSistem.controller;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.bkmz.tehSistem.data.Data;
+import ru.bkmz.tehSistem.util.gui.window.Notification;
+
+import java.util.ArrayList;
+
+import static ru.bkmz.tehSistem.controller.ControllerMain.itemGetMainController;
+import static ru.bkmz.tehSistem.util.gui.elements.BuilderElements.textProperty;
+
+public class ControllerSatings {
+    public static final Logger logger = LogManager.getLogger();
+    public ListView<HBox> listIpGet;
+    public TextField ip4;
+    public TextField ip3;
+    public TextField ip2;
+    public TextField ip1;
+
+
+    ArrayList<String> arrayIP = Data.IP_LIST.getValuetAL();
+    ObservableList<HBox> hBoxObservableList = FXCollections.observableArrayList();
+    ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+
+    public void initialize() {
+        logger.info("start initialize FXML");
+        textProperty(ip4, 3);
+        textProperty(ip3, 3);
+        textProperty(ip2, 3);
+        textProperty(ip1, 3);
+        for (String s :
+                Data.IP_LIST.getValuetAL()) {
+            HBox hBox = new HBox(10);
+            CheckBox checkBox = new CheckBox(s);
+            hBox.getChildren().addAll(checkBox);
+            checkBoxes.add(checkBox);
+            hBoxObservableList.add(hBox);
+            listIpGet.setItems(hBoxObservableList);
+            itemGetMainController.setItems(arrayIP);
+        }
+        logger.info("stop initialize FXML ");
+    }
+
+    public void add(ActionEvent actionEvent) {
+        int
+                IP1 = Integer.parseInt(ip1.getText()),
+                IP2 = Integer.parseInt(ip2.getText()),
+                IP3 = Integer.parseInt(ip3.getText()),
+                IP4 = Integer.parseInt(ip4.getText());
+        String IP1S = ip1.getText(),
+                IP2S = ip2.getText(),
+                IP3S = ip3.getText(),
+                IP4S = ip4.getText();
+
+        if (IP1 <= 225 & IP2 <= 225 & IP3 <= 225 & IP4 <= 225) {
+            boolean b = false;
+            for (String s :
+                    arrayIP) {
+                if ((IP1 + "." + IP2 + "." + IP3 + "." + IP4).equals(s)) {
+                    b = true;
+                    new Notification("Уведомление", "IP уже есть");
+                    break;
+                }
+            }
+            if (!b) {
+                hBoxObservableList.clear();
+                checkBoxes.clear();
+                arrayIP.add(IP1S + "." + IP2S + "." + IP3S + "." + IP4S);
+                Data.IP_LIST.setValuetAL(arrayIP);
+                Data.save();
+                for (String s :
+                        Data.IP_LIST.getValuetAL()) {
+
+                    HBox hBox = new HBox(10);
+                    CheckBox checkBox = new CheckBox(s);
+                    hBox.getChildren().addAll(checkBox);
+                    checkBoxes.add(checkBox);
+                    hBoxObservableList.add(hBox);
+                    listIpGet.setItems(hBoxObservableList);
+                }
+
+            }
+        } else {
+            new Notification("информация", "Привышен адрес 225");
+        }
+        itemGetMainController.setItems(arrayIP);
+    }
+
+    public void deleteIP(ActionEvent actionEvent) {
+        ArrayList<String> remList = new ArrayList<>();
+
+        for (CheckBox cb :
+                checkBoxes) {
+            if (cb.isSelected()) {
+                remList.add(cb.getText());
+            }
+        }
+        for (int i = 0; i < arrayIP.size(); i++) {
+            for (String s :
+                    remList) {
+                if (arrayIP.get(i).equals(s)) {
+                    arrayIP.remove(i);
+                }
+            }
+        }
+        hBoxObservableList.clear();
+        checkBoxes.clear();
+        Data.IP_LIST.setValuetAL(arrayIP);
+        Data.save();
+        for (String s :
+                Data.IP_LIST.getValuetAL()) {
+
+            HBox hBox = new HBox(10);
+            CheckBox checkBox = new CheckBox(s);
+            hBox.getChildren().addAll(checkBox);
+            checkBoxes.add(checkBox);
+            hBoxObservableList.add(hBox);
+            listIpGet.setItems(hBoxObservableList);
+        }
+
+        itemGetMainController.setItems(arrayIP);
+    }
+
+}
+
+package ru.bkmz.tehSistem.data;
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.bkmz.tehSistem.Main;
+import ru.bkmz.tehSistem.controller.ControllerMain;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public enum Data implements Serializable {
+    IP_LIST(Main.list),
+    IN_FILE(""),
+    OUT_FILE(""),
+    DISK("A"),
+    CBB(ControllerMain.checkBoxesBoolean);
+    public static final Logger logger = LogManager.getLogger();
+    private Object value;
+    private static String fileAddress = System.getenv("APPDATA") + "\\.tehSystem";
+    public static String fileSave = fileAddress + "\\data.data";
+
+    Data(int value) {
+        this.value = value;
+    }
+
+    Data(String values) {
+        this.value = values;
+    }
+
+    Data(ArrayList<String> list) {
+        this.value = list;
+    }
+
+    public int getValuetI() {
+        return (int) value;
+    }
+
+    public String getValuetS() {
+        return (String) value;
+    }
+
+    public ArrayList<String> getValuetAL() {
+        List<?> list = new ArrayList<>();
+        if (value.getClass().isArray()) {
+            list = Arrays.asList((Object[]) value);
+        } else if (value instanceof Collection) {
+            list = new ArrayList<>((Collection<?>) value);
+        }
+        return (ArrayList<String>) list;
+    }
+
+    public void setValuetAL(ArrayList<String> arrayList) {
+        this.value = arrayList;
+    }
+
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
+
+    public static void load() throws Exception {
+        try {
+            read();
+        } catch (FileNotFoundException e) {
+            try {
+                writer();
+            } catch (IOException ex) {
+                logger.warn("writer error:", ex);
+            }
+        }
+    }
+
+    public static void save() {
+        try {
+            writer();
+        } catch (IOException e) {
+            logger.warn("writer error:", e);
+        }
+    }
+
+    public static FileInputStream fiStream;
+    public static ObjectInputStream oiStream;
+
+    private static void read() throws Exception {
+        fiStream = new FileInputStream(new File(fileSave));
+        oiStream = new ObjectInputStream(fiStream);
+        logger.info("read start");
+        for (int i = 0; i < Data.values().length; i++) {
+            Object reading = oiStream.readObject();
+            logger.trace("read:" + Data.values()[i] + " = (" + reading + ")");
+            Data.values()[i].value = reading;
+        }
+        logger.info("read stop");
+        oiStream.close();
+        fiStream.close();
+    }
+
+    private static void writer() throws IOException {
+        File fileS = new File(fileAddress);
+
+        if (!fileS.exists()) {
+            fileS.mkdir();
+        }
+
+        FileOutputStream foStream = new FileOutputStream(new File(fileSave), false);
+        ObjectOutputStream ooStream = new ObjectOutputStream(foStream);
+        ooStream.reset();
+        logger.info("writer start");
+        for (int i = 0; i < Data.values().length; i++) {
+            Object oWriter = Data.values()[i].value;
+            logger.trace("writer:" + Data.values()[i] + " = (" + oWriter + ")");
+            ooStream.writeObject(oWriter);
+        }
+        logger.info("writer stop");
+        ooStream.close();
+        foStream.close();
+    }
+
+
+}
+package ru.bkmz.tehSistem.util;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.bkmz.tehSistem.util.gui.window.Notification;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import static ru.bkmz.tehSistem.Main.logger;
+import static ru.bkmz.tehSistem.controller.ControllerMain.addProcent;
+
+
+public class CmdHandler {
+    public static final Logger logger = LogManager.getLogger();
+
+    public void cmdRun(String file, String ip, String disk, String fileIP, CheckBox IE) throws Exception {
+
+
+        Runtime rt = Runtime.getRuntime();
+        String command;
+
+        command = "cmd.exe /c xcopy \"" + file + "\" \"\\\\" + ip + "\\" + disk + "\\" + fileIP + "\" /s /e /h /y ";
+        logger.info("launch:" + command);
+
+        Process proc = rt.exec(command);
+        cmdOut(proc, ip, IE);
+        addProcent();
+        logger.info("stop ip:" + ip);
+    }
+
+    public static void cmdOut(Process proc, String ip, CheckBox IE) throws Exception {
+        String out = "", outerror = "", line;
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream(), "Cp866"));
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream(), "Cp866"));
+        proc.waitFor();
+        proc.destroy();
+        if (IE.isSelected()) {
+            while ((line = stdInput.readLine()) != null) {
+                out += line + "\n";
+            }
+            if (!out.equals("")) {
+                new Notification("IP:" + ip, out);
+                logger.info("cmd out:", out);
+            }
+
+        }
+
+        while ((line = stdError.readLine()) != null) {
+            outerror += line + "\n";
+        }
+        if (!outerror.equals("")) {
+            new Notification("IP:" + ip, outerror, Alert.AlertType.ERROR);
+            logger.warn("cmd out error:", outerror);
+        }
+
+    }
+}
+package ru.bkmz.tehSistem.util.gui.window;
+
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import static ru.bkmz.tehSistem.Main.logger;
+
+public class Notification {
+    public static final Logger logger = LogManager.getLogger();
+    public Notification(String name, String info) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                logger.info(name+":"+info);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(name);
+                alert.setHeaderText(null);
+                alert.setContentText(info);
+                alert.showAndWait();
+            }
+        });
+    }
+
+    public Notification(String name, String info, Alert.AlertType alert) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                logger.info(name+":"+info+":"+alert);
+                Alert nAlert = new Alert(alert);
+                nAlert.setTitle(name);
+                nAlert.setHeaderText(null);
+                nAlert.setContentText(info);
+                nAlert.showAndWait();
+            }
+        });
+
+    }
+}
+package ru.bkmz.tehSistem.util.gui.window;
+
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import ru.bkmz.tehSistem.Main;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
+
+public class StageDialog {
+
+    private Stage newWindow = new Stage();
+
+    public StageDialog(String name) {
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/" + name + ".fxml")));
+        StackPane secondaryLayout = new StackPane();
+
+
+        Scene secondScene = new Scene(secondaryLayout, 598, 317);
+        newWindow.setScene(secondScene);
+        newWindow.initModality(Modality.APPLICATION_MODAL);
+        // Specifies the modality for new window.
+
+        // Specifies the owner Window (parent) for new window
+        newWindow.initOwner(Main.stage);
+
+        // Set position of second window, related to primary window.
+        try {
+            loader.load();
+        } catch (IOException e) {
+
+        }
+        Parent root = loader.getRoot();
+        InputStream inputStream = ClassLoader.class.getResourceAsStream("/img/icon.png");
+        try {
+            Image image = new Image(inputStream);
+            newWindow.getIcons().add(image);
+        } catch (NullPointerException e) {
+
+        }
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource("css/main.css")).toExternalForm());
+        newWindow.setScene(scene);
+        newWindow.setWidth(590);
+        newWindow.setHeight(590 - 10);
+        newWindow.setResizable(false);
+        newWindow.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+            }
+        });
+        newWindow.show();
+
+
+    }
+
+    public Stage getNewWindow() {
+        return newWindow;
+    }
+
+    public void setNewWindow(Stage newWindow) {
+        this.newWindow = newWindow;
+    }
+}
