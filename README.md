@@ -16,6 +16,8 @@ _____
 _____
 # Что сделано , что планируется
 :white_check_mark: Это уже сделано :negative_squared_cross_mark: Я не буду это делать :black_square_button: в планах    
+        
+            
 :white_check_mark: Добовление удаление IP адресов    
 :white_check_mark: Выбор на какие IP адреса отправлять файлы  
 :white_check_mark: Логирование проекта  
