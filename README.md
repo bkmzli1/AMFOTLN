@@ -21,7 +21,7 @@ _____
 :white_check_mark: Логирование проекта  
 :white_check_mark: Предложение выбора отправления файла\папки   
 :black_square_button: Предоставить выбор функции настроек отправки xcopy    
-:black_square_button: Удаление Файлов\папок 
+:black_square_button: Удаление Файлов\папок     
 :black_square_button: Настройки управления                  
 :black_square_button: Установщик            
 :black_square_button: Управление ПК  (*перезагрузка, выключение(через n время),и тп*)       
