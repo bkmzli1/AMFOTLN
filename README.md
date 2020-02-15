@@ -49,12 +49,15 @@ _____
 1. После чего должна пойти настройка проекта в случаи если этого не произошло то открываем файл build.gradle и зажимаем сочетание ```Ctrl+Shift+F10```
 1. Открываем файл по пути ```src/main/java/ru/bkmz/tehSistem/Main``` и зажимаем сочетание ```Ctrl+Shift+F10```
 1. Поздравляем проект успешно импортирован  
-`Рисунок 1`     
-![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/1.png?raw=true "Рисунок 1")     
-`Рисунок 2` 
-![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/2.png?raw=true "Рисунок 2")       
-`Рисунок 3`  
-![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/3.png?raw=true "Рисунок 3")     
+        
+`Рисунок 1`          
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/1.png?raw=true "Рисунок 1") 
+                       
+`Рисунок 2`      
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/2.png?raw=true "Рисунок 2")  
+                   
+`Рисунок 3`      
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/3.png?raw=true "Рисунок 3")          
 _____
 [:arrow_up:Оглавление](#Оглавление)
 _____
