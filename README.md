@@ -81,6 +81,6 @@ copyright = "BkzmLitel"
 1. в правой части есть вкладка gradle открываем её
 1. открываем Tasks/Launch4j
 1. запускаем launch4j(рисунок 4)    
-1. начнётся компиляция. после завершения exe  файл появится в ```build\launch4j\```
+1. начнётся компиляция. после завершения exe  файл появится в ```build\launch4j\```         
 ```Рисунок 4```         
 ![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/4.png?raw=true "Рисунок 4")           
