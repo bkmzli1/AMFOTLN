@@ -3,7 +3,7 @@ AMFOTLN
 # СОДЕРЖАНИЕ
 1. [ВВЕДЕНИЕ](#ВВЕДЕНИЕ)
 1. [ПЛАНЫ](#ПЛАНЫ)
-1. [УСТАНОВКА ПРОЭКТА](#Установка-проекта)
+1. [УСТАНОВКА ПРОЭКТА](#УСТАНОВКА-ПРОЭКТА)
 
 
 # ВВЕДЕНИЕ
@@ -12,7 +12,7 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 и отправки файлов по локальной сети на другие пк.   
 Данный проэкт разрабатывается специально для *НТИ НИЯУ МИФИ*
         
-[:arrow_up:Оглавление](#Оглавление)
+[:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 # ПЛАНЫ
 :white_check_mark: Это уже сделано :negative_squared_cross_mark: Я не буду это делать :black_square_button: в планах    
@@ -33,7 +33,7 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 :negative_squared_cross_mark: Настройка ПК  
 :negative_squared_cross_mark: удалённое управление мыши,клавиатуры ПК   
         
-[:arrow_up:Оглавление](#Оглавление)
+[:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 # УСТАНОВКА ПРОЭКТА
 ## 3.1 Подготовка
@@ -57,5 +57,5 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 ```Рисунок 3```
 ![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/3.png?raw=true "Рисунок 3")          
         
-[:arrow_up:Оглавление](#Оглавление)
+[:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
