@@ -53,7 +53,7 @@ _____
 ```Рисунок 1```         
 ![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/1.png?raw=true "Рисунок 1") 
                        
-```Рисунок 2```
+```Рисунок 2```     
 ![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/2.png?raw=true "Рисунок 2")  
                    
 ```Рисунок 3```
