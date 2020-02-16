@@ -43,7 +43,9 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 1. Установите [***IntelliJ IDEA*** ](https://www.jetbrains.com/idea/)
 на этом подготовка закончилась
 ## 3.2 Импорт проекта
-
+1. Нажимаем на Configure ->  Structure for new projects
+1. затем new JDK (рисунок 4)
+1. в открывшимся окне выбераем путь к jdk уменя он `C:\Program Files\Java\jdk1.8.0_231` и нажимаем ок
 1. Нажмите Get from Version Control (Рисунок 1)
 1. На сайте нажимаем Clone or download и копируем ссылку [***AMFOTLN***](https://github.com/bkmzli1/AMFOTLN) (Рисунок 2)
 1. Скопированную ссылку вставляем в поле URL и нажимаем clone (Рисунок 3)
@@ -57,7 +59,11 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 ```Рисунок 2```     
 ![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/2.png?raw=true "Рисунок 2")              
 ```Рисунок 3```
-![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/3.png?raw=true "Рисунок 3")          
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/3.png?raw=true "Рисунок 3")                 
+```Рисунок 4```
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/4.png?raw=true "Рисунок 4")   
+```Рисунок 5```
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/5.png?raw=true "Рисунок 5")          
         
 [:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
