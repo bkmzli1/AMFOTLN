@@ -38,6 +38,7 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 # УСТАНОВКА ПРОЭКТА
 ## 3.1 Подготовка
+1. Установить [***Git***](https://git-scm.com/)
 1. Устанавливаем [***JDK***](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html)
 1. Установите [***IntelliJ IDEA*** ](https://www.jetbrains.com/idea/)
 на этом подготовка закончилась
