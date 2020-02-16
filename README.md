@@ -1,20 +1,20 @@
 AMFOTLN 
 ==========
-# Оглавление
-1. [Введение](#Введение)
-1. [Что сделано, что планируется](#Что-сделано,-что-планируется)
-1. [Установка проекта](#Установка-проекта)
+# СОДЕРЖАНИЕ
+1. [ВВЕДЕНИЕ](#ВВЕДЕНИЕ)
+1. [ПЛАНЫ](#ПЛАНЫ)
+1. [УСТАНОВКА ПРОЭКТА](#Установка-проекта)
 
 
-# Введение
+# ВВЕДЕНИЕ
 
 AMFOTLN - это кодовое название прокат *Automatically move files on the local network* который предназначен для копирования 
 и отправки файлов по локальной сети на другие пк.   
 Данный проэкт разрабатывается специально для *НТИ НИЯУ МИФИ*
-_____
+        
 [:arrow_up:Оглавление](#Оглавление)
-_____
-# Что сделано, что планируется
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
+# ПЛАНЫ
 :white_check_mark: Это уже сделано :negative_squared_cross_mark: Я не буду это делать :black_square_button: в планах    
         
             
@@ -32,10 +32,10 @@ _____
 :black_square_button: Установка приложений      
 :negative_squared_cross_mark: Настройка ПК  
 :negative_squared_cross_mark: удалённое управление мыши,клавиатуры ПК   
-_____
+        
 [:arrow_up:Оглавление](#Оглавление)
-_____
-# Установка проекта
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
+# УСТАНОВКА ПРОЭКТА
 ## 3.1 Подготовка
 1. Устанавливаем [***JDK***](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html)
 1. Установите [***IntelliJ IDEA*** ](https://www.jetbrains.com/idea/)
@@ -51,13 +51,11 @@ _____
 1. Поздравляем проект успешно импортирован  
         
 ```Рисунок 1```         
-![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/1.png?raw=true "Рисунок 1") 
-                       
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/1.png?raw=true "Рисунок 1")           
 ```Рисунок 2```     
-![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/2.png?raw=true "Рисунок 2")  
-                   
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/2.png?raw=true "Рисунок 2")              
 ```Рисунок 3```
 ![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/3.png?raw=true "Рисунок 3")          
-_____
+        
 [:arrow_up:Оглавление](#Оглавление)
-_____
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
