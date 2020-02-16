@@ -4,6 +4,7 @@ AMFOTLN
 1. [ВВЕДЕНИЕ](#ВВЕДЕНИЕ)
 1. [ПЛАНЫ](#ПЛАНЫ)
 1. [УСТАНОВКА ПРОЭКТА](#УСТАНОВКА-ПРОЭКТА)
+1. [КОМПИЛЯЦИЯ ПРОЭКТА](#КОМПИЛЯЦИЯ-ПРОЭКТА)
 
 
 # ВВЕДЕНИЕ
@@ -59,3 +60,20 @@ AMFOTLN - это кодовое название прокат *Automatically mov
         
 [:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
+#КОМПИЛЯЦИЯ ПРОЭКТА
+1. открываем build.gradle и редоктируем следёющие строчки
+```gradle
+def versions = '1.1.7.6' \\версия
+def name = 'AMFOTLN reliz '\\ имя проэкта
+def main = 'ru.bkmz.tehSistem.Main'\\путь к стартовому классу 
+//находим следующие строчки и вписываем сворё имя или имя компании
+companyName = "BkzmLitel"
+copyright = "BkzmLitel"
+
+```
+1. в правой части есть вкладка gradle открываем её
+1. открываем Tasks/Launch4j
+1. запускаем launch4j(рисунок 4)    
+1. начнётся компиляция. после завершения exe  файл появится в ```build\launch4j\```
+```Рисунок 4```         
+![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/4.png?raw=true "Рисунок 4")           
