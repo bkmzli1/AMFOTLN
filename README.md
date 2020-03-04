@@ -23,6 +23,11 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 :white_check_mark: Выбор на какие IP адреса отправлять файлы  
 :white_check_mark: Логирование проекта  
 :white_check_mark: Предложение выбора отправления файла\папки   
+:white_check_mark: Загрузка приложения  
+:white_check_mark: Переход на БД SQLite  
+:white_check_mark: Выбор отправки файла в локальную сеть
+:white_check_mark: Статус IP в локальную сеть
+
 :black_square_button: Предоставить выбор функции настроек отправки xcopy    
 :black_square_button: Удаление Файлов\папок     
 :black_square_button: Настройки управления                  
@@ -76,7 +81,6 @@ def main = 'ru.bkmz.tehSistem.Main'\\путь к стартовому класс
 //находим следующие строчки и вписываем сворё имя или имя компании
 companyName = "BkzmLitel"
 copyright = "BkzmLitel"
-
 ```
 1. в правой части есть вкладка gradle открываем её
 1. открываем Tasks/Launch4j

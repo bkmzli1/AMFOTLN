@@ -99,6 +99,29 @@ public class BuilderElements {
         });
     }
 
+    public static void textPropertyTime(TextField textField, int size, int maxNumber) {
+        textField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("[\\d]")) {
+                    newValue = newValue.replaceAll("[^\\d]", "");
+                    if (newValue.length() > size) {
+                        newValue = newValue.substring(0, size);
+                    }
+                    try {
+                        if (Integer.parseInt(newValue) > maxNumber) {
+                            newValue = newValue.substring(0, newValue.length() - 1);
+                        }
+                    } catch (NumberFormatException nfe) {
+
+                    }
+
+                    textField.setText(newValue);
+                }
+            }
+        });
+    }
+
     public static Button buttonBuild(String value) {
         Button button = new Button(value);
         button.setAlignment(Pos.CENTER);

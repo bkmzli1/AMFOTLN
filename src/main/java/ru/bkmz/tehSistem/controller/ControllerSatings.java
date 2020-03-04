@@ -7,15 +7,19 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.bkmz.tehSistem.data.Data;
 import ru.bkmz.tehSistem.util.gui.window.Notification;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import static ru.bkmz.tehSistem.Main.bd;
 import static ru.bkmz.tehSistem.controller.ControllerMain.itemGetMainController;
-import static ru.bkmz.tehSistem.util.gui.elements.BuilderElements.textProperty;
+import static ru.bkmz.tehSistem.util.gui.elements.BuilderElements.textPropertyTime;
 
 public class ControllerSatings {
     public static final Logger logger = LogManager.getLogger();
@@ -24,110 +28,106 @@ public class ControllerSatings {
     public TextField ip3;
     public TextField ip2;
     public TextField ip1;
+    public VBox argsVBox;
 
 
-    ArrayList<String> arrayIP = Data.IP_LIST.getValuetAL();
     ObservableList<HBox> hBoxObservableList = FXCollections.observableArrayList();
     ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
     public void initialize() {
         logger.info("start initialize FXML");
-        textProperty(ip4, 3);
-        textProperty(ip3, 3);
-        textProperty(ip2, 3);
-        textProperty(ip1, 3);
-        for (String s :
-                Data.IP_LIST.getValuetAL()) {
-            HBox hBox = new HBox(10);
-            CheckBox checkBox = new CheckBox(s);
-            hBox.getChildren().addAll(checkBox);
-            checkBoxes.add(checkBox);
-            hBoxObservableList.add(hBox);
-            listIpGet.setItems(hBoxObservableList);
-            itemGetMainController.setItems(arrayIP);
-        }
+        ip4.setText("");
+        ip3.setText("0");
+        ip2.setText("168");
+        ip1.setText("192");
+        textPropertyTime(ip4, 3, 255);
+        textPropertyTime(ip3, 3, 255);
+        textPropertyTime(ip2, 3, 255);
+        textPropertyTime(ip1, 3, 255);
+
+        update();
         logger.info("stop initialize FXML ");
     }
 
     public void add(ActionEvent actionEvent) {
-        int
-                IP1 = Integer.parseInt(ip1.getText()),
-                IP2 = Integer.parseInt(ip2.getText()),
-                IP3 = Integer.parseInt(ip3.getText()),
-                IP4 = Integer.parseInt(ip4.getText());
         String IP1S = ip1.getText(),
                 IP2S = ip2.getText(),
                 IP3S = ip3.getText(),
                 IP4S = ip4.getText();
 
-        if (IP1 <= 225 & IP2 <= 225 & IP3 <= 225 & IP4 <= 225) {
-            boolean b = false;
-            for (String s :
-                    arrayIP) {
-                if ((IP1 + "." + IP2 + "." + IP3 + "." + IP4).equals(s)) {
-                    b = true;
-                    new Notification("Уведомление", "IP уже есть");
+        if (!ip1.getText().equals("") & !ip2.getText().equals("") & !ip3.getText().equals("") &
+                !ip4.getText().equals("")) {
+            String ip = IP1S + "." + IP2S + "." + IP3S + "." + IP4S;
+            boolean two = false;
+            for (CheckBox cb :
+                    checkBoxes) {
+                if (cb.getText().equals(ip)) {
+                    two = true;
                     break;
                 }
             }
-            if (!b) {
-                hBoxObservableList.clear();
-                checkBoxes.clear();
-                arrayIP.add(IP1S + "." + IP2S + "." + IP3S + "." + IP4S);
-                Data.IP_LIST.setValuetAL(arrayIP);
-                Data.save();
-                for (String s :
-                        Data.IP_LIST.getValuetAL()) {
+            if (!two) {
+                try {
+                    Statement statmt = bd.getConn().createStatement();
+                    statmt.execute("INSERT INTO IP ('ip','boll') VALUES ('" + ip + "','false');");
+                    statmt.close();
+                } catch (SQLException e) {
 
-                    HBox hBox = new HBox(10);
-                    CheckBox checkBox = new CheckBox(s);
-                    hBox.getChildren().addAll(checkBox);
-                    checkBoxes.add(checkBox);
-                    hBoxObservableList.add(hBox);
-                    listIpGet.setItems(hBoxObservableList);
                 }
-
+                itemGetMainController.addList(ip);
+                addIP(ip);
+            } else {
+                new Notification("БД", "Данный IP уже есть");
             }
         } else {
-            new Notification("информация", "Привышен адрес 225");
+            new Notification("БД", "Заполните все поля");
         }
-        itemGetMainController.setItems(arrayIP);
+
     }
 
     public void deleteIP(ActionEvent actionEvent) {
-        ArrayList<String> remList = new ArrayList<>();
-
         for (CheckBox cb :
                 checkBoxes) {
             if (cb.isSelected()) {
-                remList.add(cb.getText());
-            }
-        }
-        for (int i = 0; i < arrayIP.size(); i++) {
-            for (String s :
-                    remList) {
-                if (arrayIP.get(i).equals(s)) {
-                    arrayIP.remove(i);
+                try {
+                    Statement statmt = bd.getConn().createStatement();
+                    statmt.execute("DELETE FROM IP WHERE ip = '" + cb.getText() + "'");
+                } catch (Exception e) {
+                    logger.error("deleteIP:", e);
                 }
             }
         }
+        itemGetMainController.upDate();
+        update();
+    }
+
+    public void argSave(ActionEvent actionEvent) {
+        update();
+    }
+
+    void addIP(String ip) {
+        HBox hBox = new HBox(10);
+        CheckBox checkBox = new CheckBox(ip);
+        checkBoxes.add(checkBox);
+        hBox.getChildren().addAll(checkBox);
+        hBoxObservableList.addAll(hBox);
+        listIpGet.setItems(hBoxObservableList);
+    }
+
+    void update() {
         hBoxObservableList.clear();
         checkBoxes.clear();
-        Data.IP_LIST.setValuetAL(arrayIP);
-        Data.save();
-        for (String s :
-                Data.IP_LIST.getValuetAL()) {
+        try {
+            Statement statmt = bd.getConn().createStatement();
+            ResultSet resultSet = statmt.executeQuery("SELECT * FROM 'IP'");
+            while (resultSet.next()) {
+                addIP(resultSet.getString("ip"));
+            }
+        } catch (Exception e) {
 
-            HBox hBox = new HBox(10);
-            CheckBox checkBox = new CheckBox(s);
-            hBox.getChildren().addAll(checkBox);
-            checkBoxes.add(checkBox);
-            hBoxObservableList.add(hBox);
-            listIpGet.setItems(hBoxObservableList);
         }
-
-        itemGetMainController.setItems(arrayIP);
     }
+
 
 }
 

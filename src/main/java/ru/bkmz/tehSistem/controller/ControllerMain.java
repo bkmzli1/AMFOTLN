@@ -14,15 +14,21 @@ import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.bkmz.tehSistem.Main;
-import ru.bkmz.tehSistem.data.Data;
 import ru.bkmz.tehSistem.util.CmdHandler;
 import ru.bkmz.tehSistem.util.gui.elements.ItemGetMainController;
 import ru.bkmz.tehSistem.util.gui.window.Notification;
 import ru.bkmz.tehSistem.util.gui.window.StageDialog;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import static ru.bkmz.tehSistem.Main.bd;
+import static ru.bkmz.tehSistem.Main.stage;
 import static ru.bkmz.tehSistem.util.CmdHandler.cmdOut;
 
 public class ControllerMain {
@@ -35,11 +41,10 @@ public class ControllerMain {
     public AnchorPane rootAP;
     public static Circle lite = new Circle(7);
     public CheckBox IE;
-    ArrayList<String> arrayIP = Data.IP_LIST.getValuetAL();
+    ;
     ObservableList<HBox> hBoxObservableList = FXCollections.observableArrayList();
     ObservableList<String> AZList = FXCollections.observableArrayList();
-    public static ArrayList<CheckBox> checkBoxes = new ArrayList<>();
-    public static ArrayList<String> checkBoxesBoolean = new ArrayList<>();
+
     public static ItemGetMainController itemGetMainController;
     public static Text proces = new Text("готов к работе");
     public static int sizeEnd = 0;
@@ -50,33 +55,29 @@ public class ControllerMain {
         lite.setFill(Color.rgb(0, 250, 0));
         lite.setStroke(Color.rgb(0, 0, 0));
         lite.setStrokeWidth(1);
-        //HBox.setMargin(proces,new Insets(0,15,0,0));
-        panelHboxTool.getChildren().add(proces);
-        panelHboxTool.getChildren().add(lite);
-        fileIN.setText(Data.IN_FILE.getValuetS());
-        fileOUT.setText(Data.OUT_FILE.getValuetS());
+
         itemGetMainController = new ItemGetMainController(listIpGet, fileOUT, fileIN, hBoxObservableList, threads);
+        itemGetMainController.upDate();
         for (int i = 65; i <= 90; i++) {
             AZList.add(String.valueOf((char) i));
         }
+        panelHboxTool.getChildren().add(proces);
+        panelHboxTool.getChildren().add(lite);
 
         discList.setItems(AZList);
-        discList.setValue(Data.DISK.getValuetS());
-        for (String s :
-                arrayIP) {
+        try {
+            Statement statmt = bd.getConn().createStatement();
+            ResultSet resultSet = statmt.executeQuery("SELECT * FROM 'settings'");
+            discList.setValue(resultSet.getString("DISK"));
+            fileIN.setText(resultSet.getString("FILE_IN"));
+            fileOUT.setText(resultSet.getString("FILE_OUT"));
+            statmt.close();
+            resultSet.close();
+        } catch (SQLException e) {
 
-            HBox hBox = new HBox(10);
-            CheckBox checkBox = new CheckBox(s);
-            hBox.getChildren().addAll(checkBox);
-            checkBoxes.add(checkBox);
-            hBoxObservableList.add(hBox);
-            listIpGet.setItems(hBoxObservableList);
         }
-        checkBoxesBoolean = Data.CBB.getValuetAL();
-        for (int i = 0; i < checkBoxesBoolean.size(); i++) {
-            checkBoxes.get(i).setSelected(Boolean.parseBoolean(checkBoxesBoolean.get(i)));
-        }
-        logger.info("stop initialize FXML ");
+
+
     }
 
     static ArrayList<Thread> threads = new ArrayList<>();
@@ -98,8 +99,9 @@ public class ControllerMain {
                 threads.clear();
                 CmdHandler cmdHandler = new CmdHandler();
                 for (CheckBox cb :
-                        checkBoxes) {
-                    String cbTxt = cb.getText(), discListTxt = discList.getValue().toString().toLowerCase(), fileOUText = fileOUT.getText();
+                        itemGetMainController.getCheckBoxes()) {
+                    String cbTxt = cb.getText(), discListTxt = discList.getValue().toString().toLowerCase(),
+                            fileOUText = fileOUT.getText();
                     if (cb.isSelected()) {
                         Thread thread = new Thread(new Runnable() {
                             @Override
@@ -107,7 +109,9 @@ public class ControllerMain {
                                 try {
                                     logger.info("start ip:" + cbTxt);
                                     Runtime rt = Runtime.getRuntime();
-                                    Process proc = rt.exec("cmd.exe /c mkdir \\\\" + cbTxt + "\\" + discListTxt + "$\\" + fileOUText);
+                                    Process proc =
+                                            rt.exec("cmd.exe /c mkdir \\\\" + cbTxt + "\\" + discListTxt + "$\\" +
+                                                    fileOUText);
                                     proc.waitFor();
                                     if (IE.isSelected()) {
                                         cmdOut(proc, cbTxt + " создание папки:" + fileOUText, IE);
@@ -142,6 +146,7 @@ public class ControllerMain {
         }
     }
 
+
     public static void addProcent() {
         sizeEnd++;
         proces.setText("завершено " + sizeEnd + "/" + threads.size());
@@ -153,23 +158,27 @@ public class ControllerMain {
     }
 
     public void settings(ActionEvent actionEvent) {
-        checkBoxes.clear();
+
         new StageDialog("settings");
 
     }
 
     public void saveButton(ActionEvent actionEvent) {
-        Data.IN_FILE.setValue(fileIN.getText());
-        Data.OUT_FILE.setValue(fileOUT.getText());
-        Data.DISK.setValue(discList.getValue().toString());
-        checkBoxesBoolean.clear();
-        for (CheckBox cb :
-                checkBoxes) {
-            checkBoxesBoolean.add(String.valueOf(cb.isSelected()));
+        //UPDATE settings SET FILE_OUT = 'o', FILE_IN = 'i', DISK = 'd' WHERE id = 1
 
+        try {
+            Statement statmt = bd.getConn().createStatement();
+            statmt.execute(
+                    "UPDATE settings SET FILE_OUT = '" + fileOUT.getText() + "', FILE_IN = '" + fileIN.getText() +
+                            "', DISK = '" + discList.getValue() + "' WHERE id = 1");
+            for (int i = 0; i < itemGetMainController.getCheckBoxes().size(); i++) {
+                statmt.execute("UPDATE IP SET  boll = '" +
+                        String.valueOf(itemGetMainController.getCheckBoxes().get(i).isSelected()).replace("true", "1")
+                                .replace("false", "0") + "' WHERE id = " + (i + 1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        Data.CBB.setValue(checkBoxesBoolean);
-        Data.save();
     }
 
     public void auther(ActionEvent actionEvent) {
@@ -178,7 +187,7 @@ public class ControllerMain {
 
     public void fileDesctop(ActionEvent actionEvent) {
         FileChooser dialog = new FileChooser();
-        File file = dialog.showOpenDialog(ru.bkmz.tehSistem.Main.stage);
+        File file = dialog.showOpenDialog(Main.stage);
         if (file != null)
             fileIN.setText(String.valueOf(file));
     }
@@ -188,5 +197,93 @@ public class ControllerMain {
         File file = dialog.showDialog(Main.stage);
         if (file != null)
             fileIN.setText(String.valueOf(file));
+    }
+
+    public void fileDesctopIP(ActionEvent actionEvent) {
+        FileChooser dialog = new FileChooser();
+        boolean onen = false;
+        try {
+            for (CheckBox cb :
+                    itemGetMainController.getCheckBoxes()) {
+                if (InetAddress.getByName(cb.getText()).isReachable(1000)) {
+                    logger.trace(cb.getText());
+                    logger.trace("\\\\" + cb.getText() + "\\" + discList.getValue().toString().toLowerCase() + "$");
+                    dialog.setInitialDirectory(new File(
+                            "\\\\" + cb.getText() + "\\" + discList.getValue().toString().toLowerCase() + "$"));
+                    try {
+                        File file = dialog.showOpenDialog(stage);
+                        if (file != null)
+                            fileOUT.setText(String.valueOf(file).replace(
+                                    "\\\\" + cb.getText() + "\\" + discList.getValue().toString().toLowerCase() + "$",
+                                    ""));
+                        onen = true;
+                        break;
+                    } catch (Exception e) {
+
+                    }
+
+                }
+            }
+        } catch (IOException oiE) {
+            logger.error("desctop:", oiE);
+        }
+        if (!onen) {
+            new Notification("Ошибка", "Программе не удолось открыть путь по локальной сети.\n" +
+                    "Попробуйте сменить диск или добавить IP адреса");
+            dialog = new FileChooser();
+            File file = dialog.showOpenDialog(stage);
+            if (file != null)
+                fileOUT.setText(String.valueOf(file));
+        }
+
+
+    }
+
+    // dialog.setInitialDirectory(new File("\\\\192.168.0.159\\c$"));
+    public void desctopIP(ActionEvent actionEvent) {
+
+        DirectoryChooser dialog = new DirectoryChooser();
+
+        boolean onen = false;
+        try {
+            for (CheckBox cb : itemGetMainController.getCheckBoxes()) {
+                if (InetAddress.getByName(cb.getText()).isReachable(1000)) {
+                    logger.trace(cb.getText());
+                    logger.trace("\\\\" + cb.getText() + "\\" + discList.getValue().toString().toLowerCase() + "$");
+                    dialog.setInitialDirectory(new File(
+                            "\\\\" + cb.getText() + "\\" + discList.getValue().toString().toLowerCase() + "$"));
+
+                    try {
+                        File file = dialog.showDialog(stage);
+                        if (file != null)
+                            fileOUT.setText(String.valueOf(file).replace(
+                                    "\\\\" + cb.getText() + "\\" + discList.getValue().toString().toLowerCase() + "$",
+                                    ""));
+                        onen = true;
+                        break;
+                    } catch (Exception e) {
+
+                    }
+
+                }
+            }
+        } catch (IOException oiE) {
+            logger.error("desctop:", oiE);
+        }
+
+        if (!onen) {
+            new Notification("Ошибка", "Программе не удолось открыть путь по локальной сети.\n" +
+                    "Попробуйте сменить диск или добавить IP адреса");
+            dialog = new DirectoryChooser();
+            File file = dialog.showDialog(stage);
+            if (file != null)
+                fileOUT.setText(String.valueOf(file));
+        }
+
+
+    }
+
+    public void upDate(ActionEvent actionEvent) {
+        itemGetMainController.upDate();
     }
 }

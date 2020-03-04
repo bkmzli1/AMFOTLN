@@ -1,16 +1,22 @@
 package ru.bkmz.tehSistem.util.gui.elements;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.bkmz.tehSistem.controller.ControllerMain;
 
+import java.net.InetAddress;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
+
+import static ru.bkmz.tehSistem.Main.bd;
 
 public class ItemGetMainController {
     public static final Logger logger = LogManager.getLogger();
@@ -19,6 +25,10 @@ public class ItemGetMainController {
     private TextField fileIN;
     ObservableList<HBox> hBoxObservableList = FXCollections.observableArrayList();
     ArrayList<Thread> threads;
+    ArrayList<String> ips = new ArrayList<>();
+    ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+    ArrayList<Text> textsConn = new ArrayList<>();
+
 
     public ItemGetMainController(ListView<HBox> listIpGet, TextField fileOUT, TextField fileIN, ObservableList<HBox> hBoxObservableList, ArrayList<Thread> threads) {
         this.listIpGet = listIpGet;
@@ -68,18 +78,103 @@ public class ItemGetMainController {
         this.threads = threads;
     }
 
-    public void setItems(ArrayList<String> arrayIP) {
-        ArrayList<CheckBox> checkBoxes2 = new ArrayList<>();
+    public void upDate() {
+        checkBoxes.clear();
         hBoxObservableList.clear();
-        for (String s :
-                arrayIP) {
-            HBox hBox = new HBox(10);
-            CheckBox checkBox = new CheckBox(s);
-            hBox.getChildren().addAll(checkBox);
-            hBoxObservableList.add(hBox);
-            listIpGet.setItems(hBoxObservableList);
-            checkBoxes2.add(checkBox);
-        }
-        ControllerMain.checkBoxes = checkBoxes2;
+        textsConn.clear();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Statement statmt = bd.getConn().createStatement();
+                    ResultSet resultSet = statmt.executeQuery("SELECT * FROM 'IP'");
+                    while (resultSet.next()) {
+                        String ip = resultSet.getString("ip");
+                        ips.add(ip);
+                        HBox hBox = new HBox(10);
+                        CheckBox checkBox = new CheckBox(ip);
+                        boolean b =resultSet.getBoolean("boll");
+                        checkBox.setSelected(b);
+
+                        Text text = new Text(": " + "Обрабтка");
+
+                        hBox.getChildren().addAll(checkBox, text);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    String s = ": " + InetAddress.getByName(ip).isReachable(1000);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            text.setText(s);
+                                        }
+                                    });
+                                } catch (Exception e) {
+                                }
+                            }
+                        }).start();
+                        checkBoxes.add(checkBox);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                textsConn.add(text);
+                                hBoxObservableList.addAll(hBox);
+                            }
+                        });
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                listIpGet.setItems(hBoxObservableList);
+                            }
+                        });
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, "upDate").start();
+
+    }
+
+    public void addList(String ip) {
+
+        HBox hBox = new HBox(10);
+        CheckBox checkBox = new CheckBox(ip);
+
+        Text text = new Text(": " + "Обрабтка");
+
+        hBox.getChildren().addAll(checkBox, text);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String s = ": " + InetAddress.getByName(ip).isReachable(1000);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            text.setText(s);
+                        }
+                    });
+                } catch (Exception e) {
+                }
+            }
+        }).start();
+        textsConn.add(text);
+        checkBoxes.add(checkBox);
+        hBoxObservableList.addAll(hBox);
+        listIpGet.setItems(hBoxObservableList);
+
+    }
+
+    public ArrayList<CheckBox> getCheckBoxes() {
+        return checkBoxes;
+    }
+
+    public void setCheckBoxes(ArrayList<CheckBox> checkBoxes) {
+        this.checkBoxes = checkBoxes;
     }
 }

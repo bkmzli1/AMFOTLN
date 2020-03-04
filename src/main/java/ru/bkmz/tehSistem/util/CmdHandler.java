@@ -22,7 +22,7 @@ public class CmdHandler {
         Runtime rt = Runtime.getRuntime();
         String command;
 
-        command = "cmd.exe /c xcopy \"" + file + "\" \"\\\\" + ip + "\\" + disk + "\\" + fileIP + "\" /s /e /h /y ";
+        command = "cmd.exe /c xcopy \"" + file + "\" \"\\\\" + ip + "\\" + disk + "\\" + fileIP + "\" /s /e /h /y /i";
         logger.info("launch:" + command);
 
         Process proc = rt.exec(command);

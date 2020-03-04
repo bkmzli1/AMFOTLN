@@ -13,6 +13,7 @@
                         <Menu mnemonicParsing="false" text="Файл">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#settings" text="Добавить IP" />
+                                <MenuItem mnemonicParsing="false" onAction="#upDate" text="Обновить IP" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Помощь">
@@ -41,6 +42,8 @@
                             <children>
                                 <ComboBox fx:id="discList" prefHeight="25.0" prefWidth="79.0" promptText="С" />
                                 <TextField fx:id="fileOUT" promptText="куда" HBox.hgrow="ALWAYS" />
+                                <Button mnemonicParsing="false" onAction="#fileDesctopIP" text="выбор файла" />
+                                <Button mnemonicParsing="false" onAction="#desctopIP" text="выбрать папку" />
                             </children>
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

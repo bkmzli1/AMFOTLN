@@ -10,60 +10,52 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.bkmz.tehSistem.data.Data;
-import ru.bkmz.tehSistem.util.gui.window.Notification;
+import ru.bkmz.tehSistem.sql.BD;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Main extends Application {
 
-    public static ArrayList<String> list = new ArrayList<>();
     public static Stage stage;
     final String name = "AMFOTLN";
     public static final Logger logger = LogManager.getLogger();
+    static final SplashScreen splash = SplashScreen.getSplashScreen();
+    static Graphics2D g;
+    static Rectangle rectangle;
+    public static String FileSeve = System.getenv("APPDATA") + "\\AMFOTLN",
+            SQLFile = FileSeve + "\\AMFOTLN.sqlite";
+    public static BD bd;
 
     public static void main(String[] args) throws IOException {
+        rectangle = splash.getBounds();
+        g = splash.createGraphics();
+        g.setColor(Color.GREEN);
         logger.info("start:launch");
         launch(args);
     }
 
     @Override
     public void init() {
-        logger.info("start:init");
-        try {
-            Data.load();
-        } catch (Exception e) {
-            File file = new File(Data.fileSave);
-            try {
-                Data.fiStream.close();
-                Data.oiStream.close();
-            } catch (IOException ex) {
-                logger.fatal(ex);
-            }
-
-            if (file.delete()) {
-                new Notification("Глобальная ошибка", "Фаил повреждён\n" +
-                        "Данные ввернутся к зоводским настройкам");
-            } else {
-                new Notification("Глобальная  ошибка", "Фаил повреждён\n" +
-                        "Не удолось удалить файл.\n" +
-                        "Удалите данный фаил \"" + Data.fileSave + "\".\n" +
-                        "Программа завершится через 20 секунд.");
-                logger.fatal("Фатальная ошибка", e);
-                try {
-                    Thread.sleep(20000);
-                } catch (InterruptedException ex) {
-                    logger.fatal(ex);
-                }
-                System.exit(1);
-            }
-
+        File file = new File(FileSeve);
+        if (!file.exists()) {
+            file.mkdir();
         }
-        logger.info("stop:init");
+        try {
+            file = new File(SQLFile);
+            boolean f = !file.exists();
+            bd = new BD(SQLFile);
+
+            if (f) {
+                bd.start();
+            }
+        } catch (Exception e) {
+            logger.error("BD:", e);
+        }
+        splashUP(30);
     }
 
     @Override
@@ -80,9 +72,16 @@ public class Main extends Application {
         Parent root = loader.getRoot();
         logger.info("stop loader FXML");
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource("css/main.css")).toExternalForm());
+        scene.getStylesheets()
+                .add(Objects.requireNonNull(getClass().getClassLoader().getResource("css/main.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(name);
+        splashUP(50);
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         InputStream inputStream = ClassLoader.class.getResourceAsStream("/img/icon.png");
         try {
             Image image = new Image(inputStream);
@@ -95,12 +94,54 @@ public class Main extends Application {
                 System.exit(0);
             }
         });
-
+        Dimension sSize = Toolkit.getDefaultToolkit().getScreenSize();
+        stage.setHeight((sSize.height * 50d) / 100d);
+        stage.setWidth((sSize.width * 50d) / 100d);
+        stage.setMinHeight((sSize.height * 20d) / 100d);
+        stage.setMinWidth((sSize.width * 20d) / 100d);
+        splashUP(100);
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        splash.close();
         stage.show();
 
         this.stage = stage;
         //this.follScren = stage.isMaximized();
         //stage.setResizable(resizable);
+    }
+
+    static int rootSize = 0;
+    static Thread thread;
+
+    static void splashUP(int size) {
+        thread = new Thread(new Runnable() {
+            @Override public void run() {
+                try {
+                    if (String.valueOf(thread).equals("null"))
+                        thread.join();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                for (int i = rootSize + 1; i <= size; i++) {
+                    int finalI = i;
+                    g.fillRect(0, 0, rectangle.width * finalI / 100, 10);
+                    splash.update();
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                rootSize = size;
+
+            }
+        });
+        thread.start();
+
+
 
     }
 }

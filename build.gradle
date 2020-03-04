@@ -1,13 +1,13 @@
 plugins {
     id 'java'
     id 'edu.sc.seis.launch4j' version '2.4.6'
-   
+
 }
 
-def versions = '1.1.7.6'
+def versions = '1.1.8.1'
 def name = 'AMFOTLN reliz '
 def main = 'ru.bkmz.tehSistem.Main'
-
+def splash = 'img/fon1.gif'
 
 launch4j {
     mainClassName = main
@@ -34,10 +34,13 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.0'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.0'
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.30.1'
+
 }
 jar {
     exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
@@ -45,7 +48,8 @@ jar {
     manifest {
         attributes(
                 'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' '),
-                'Main-Class': main
+                'Main-Class': main,
+                'SplashScreen-Image': splash,
         )
     }
 }
