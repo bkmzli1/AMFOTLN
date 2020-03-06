@@ -1,15 +1,18 @@
 package ru.bkmz.tehSistem.util.gui.elements;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.bkmz.tehSistem.util.Table;
 
 import java.net.InetAddress;
 import java.sql.ResultSet;
@@ -20,67 +23,48 @@ import static ru.bkmz.tehSistem.Main.bd;
 
 public class ItemGetMainController {
     public static final Logger logger = LogManager.getLogger();
-    private ListView<HBox> listIpGet;
+    private TableView<Table> tableIP;
     private TextField fileOUT;
     private TextField fileIN;
-    ObservableList<HBox> hBoxObservableList = FXCollections.observableArrayList();
+    ObservableList<Table> tableOList;
     ArrayList<Thread> threads;
     ArrayList<String> ips = new ArrayList<>();
     ArrayList<CheckBox> checkBoxes = new ArrayList<>();
     ArrayList<Text> textsConn = new ArrayList<>();
 
 
-    public ItemGetMainController(ListView<HBox> listIpGet, TextField fileOUT, TextField fileIN, ObservableList<HBox> hBoxObservableList, ArrayList<Thread> threads) {
-        this.listIpGet = listIpGet;
+    public ItemGetMainController(TableView<Table> tableIP, TextField fileOUT, TextField fileIN, ObservableList<Table> hBoxObservableList, ArrayList<Thread> threads) {
+        this.tableIP = tableIP;
         this.fileOUT = fileOUT;
         this.fileIN = fileIN;
-        this.hBoxObservableList = hBoxObservableList;
+        this.tableOList = hBoxObservableList;
         this.threads = threads;
-    }
+        TableColumn<Table, String> colIP = new TableColumn<Table, String>("IP");
+        TableColumn<Table, String> colName = new TableColumn<Table, String>("Имя");
+        TableColumn<Table, String> colStat = new TableColumn<Table, String>("Статус");
 
-    public ListView<HBox> getListIpGet() {
-        return listIpGet;
-    }
+        colIP.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colStat.setCellValueFactory(new PropertyValueFactory<>("circle"));
 
-    public void setListIpGet(ListView<HBox> listIpGet) {
-        this.listIpGet = listIpGet;
-    }
+        colIP.setMinWidth(150);
+        colIP.setMaxWidth(150);
+        colStat.setMinWidth(100);
+        colStat.setMaxWidth(100);
 
-    public TextField getFileOUT() {
-        return fileOUT;
-    }
+        colName.setStyle(" -fx-alignment: CENTER");
+        colStat.setStyle(" -fx-alignment: CENTER");
 
-    public void setFileOUT(TextField fileOUT) {
-        this.fileOUT = fileOUT;
-    }
+        colIP.setEditable(false);
+        colName.setEditable(false);
+        colStat.setEditable(false);
 
-    public TextField getFileIN() {
-        return fileIN;
-    }
-
-    public void setFileIN(TextField fileIN) {
-        this.fileIN = fileIN;
-    }
-
-    public ObservableList<HBox> gethBoxObservableList() {
-        return hBoxObservableList;
-    }
-
-    public void sethBoxObservableList(ObservableList<HBox> hBoxObservableList) {
-        this.hBoxObservableList = hBoxObservableList;
-    }
-
-    public ArrayList<Thread> getThreads() {
-        return threads;
-    }
-
-    public void setThreads(ArrayList<Thread> threads) {
-        this.threads = threads;
+        tableIP.getColumns().addAll(colIP, colName, colStat);
     }
 
     public void upDate() {
         checkBoxes.clear();
-        hBoxObservableList.clear();
+        tableOList.clear();
         textsConn.clear();
         new Thread(new Runnable() {
             @Override
@@ -91,23 +75,26 @@ public class ItemGetMainController {
                     while (resultSet.next()) {
                         String ip = resultSet.getString("ip");
                         ips.add(ip);
-                        HBox hBox = new HBox(10);
+
                         CheckBox checkBox = new CheckBox(ip);
-                        boolean b =resultSet.getBoolean("boll");
+                        boolean b = resultSet.getBoolean("boll");
                         checkBox.setSelected(b);
 
-                        Text text = new Text(": " + "Обрабтка");
-
-                        hBox.getChildren().addAll(checkBox, text);
+                        Table table = new Table(checkBox, resultSet.getString("name"));
+                        tableOList.add(table);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
-                                    String s = ": " + InetAddress.getByName(ip).isReachable(1000);
+                                    boolean con = InetAddress.getByName(ip).isReachable(1000);
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            text.setText(s);
+                                            if (con) {
+                                                table.setCircleValue(Color.color(0,1,0));
+                                            } else {
+                                                table.setCircleValue(Color.color(1,0,0));
+                                            }
                                         }
                                     });
                                 } catch (Exception e) {
@@ -115,17 +102,11 @@ public class ItemGetMainController {
                             }
                         }).start();
                         checkBoxes.add(checkBox);
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                textsConn.add(text);
-                                hBoxObservableList.addAll(hBox);
-                            }
-                        });
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                listIpGet.setItems(hBoxObservableList);
+                                tableIP.setItems(tableOList);
                             }
                         });
 
@@ -165,16 +146,21 @@ public class ItemGetMainController {
         }).start();
         textsConn.add(text);
         checkBoxes.add(checkBox);
-        hBoxObservableList.addAll(hBox);
-        listIpGet.setItems(hBoxObservableList);
 
+        tableIP.setItems(tableOList);
+
+    }
+
+    public TableView<Table> getTableIP() {
+        return tableIP;
+    }
+
+    public void setTableIP(TableView<Table> tableIP) {
+        this.tableIP = tableIP;
     }
 
     public ArrayList<CheckBox> getCheckBoxes() {
         return checkBoxes;
     }
 
-    public void setCheckBoxes(ArrayList<CheckBox> checkBoxes) {
-        this.checkBoxes = checkBoxes;
-    }
 }

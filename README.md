@@ -17,8 +17,9 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 # ПЛАНЫ
 :white_check_mark: Это уже сделано :negative_squared_cross_mark: Я не буду это делать :black_square_button: в планах    
-        
-            
+
+
+
 :white_check_mark: Добовление удаление IP адресов    
 :white_check_mark: Выбор на какие IP адреса отправлять файлы  
 :white_check_mark: Логирование проекта  
@@ -41,6 +42,7 @@ AMFOTLN - это кодовое название прокат *Automatically mov
         
 [:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
+
 # УСТАНОВКА ПРОЭКТА
 ## 3.1 Подготовка
 1. Установить [***Git***](https://git-scm.com/)
@@ -59,6 +61,7 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 1. Открываем файл по пути ```src/main/java/ru/bkmz/tehSistem/Main``` и зажимаем сочетание ```Ctrl+Shift+F10```
 1. Поздравляем проект успешно импортирован  
         
+
 ```Рисунок 1```         
 ![Alt-текст](https://github.com/bkmzli1/AMFOTLN/blob/master/img/1.png?raw=true "Рисунок 1")           
 ```Рисунок 2```     

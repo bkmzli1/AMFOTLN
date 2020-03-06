@@ -24,9 +24,6 @@
                     </menus>
                 </MenuBar>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
                     <children>
                         <HBox spacing="10.0">
                             <children>
@@ -37,6 +34,9 @@
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
+                     <VBox.margin>
+                        <Insets left="-5.0" right="-5.0" />
+                     </VBox.margin>
                         </HBox>
                         <HBox spacing="10.0">
                             <children>
@@ -48,28 +48,40 @@
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
+                     <VBox.margin>
+                        <Insets left="-5.0" right="-5.0" />
+                     </VBox.margin>
                         </HBox>
-                        <ListView fx:id="listIpGet" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                            <VBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </VBox.margin>
-                        </ListView>
+                        <TableView fx:id="tableIP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
                         <HBox fx:id="panelHboxTool" alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0">
                             <children>
                                 <Button mnemonicParsing="false" onAction="#copi" text="копировать файл">
                                     <HBox.margin>
-                                        <Insets left="10.0" />
+                                        <Insets left="5.0" />
                                     </HBox.margin>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                                 </Button>
                                 <Button mnemonicParsing="false" onAction="#saveButton" text="сохранить параметры" />
                                 <CheckBox fx:id="IE" alignment="CENTER" mnemonicParsing="false" text="уведомления" textAlignment="CENTER" />
                                 <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Button" visible="false" HBox.hgrow="ALWAYS" />
                             </children>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
+                     <padding>
+                        <Insets bottom="5.0" left="-5.0" right="5.0" top="5.0" />
+                     </padding>
                         </HBox>
                     </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
                 </VBox>
             </children>
         </VBox>

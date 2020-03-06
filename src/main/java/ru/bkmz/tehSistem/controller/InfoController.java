@@ -1,7 +1,5 @@
 package ru.bkmz.tehSistem.controller;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -10,8 +8,6 @@ import org.apache.logging.log4j.Logger;
 import ru.bkmz.tehSistem.util.gui.elements.WrappedImageView;
 
 import java.io.InputStream;
-
-import static ru.bkmz.tehSistem.Main.logger;
 
 public class InfoController {
     public static final Logger logger = LogManager.getLogger();
@@ -33,14 +29,14 @@ public class InfoController {
 
 
     public void initialize() {
-        logger.info("start initialize FXML " );
+        logger.info("start initialize FXML ");
         title.setId("title");
         imageBuilder(imageGit, "https://github.com/bkmzli1", vBoxGit);
         imageBuilder(imageAether, "https://github.com/bkmzli1", vBoxAether);
         imageBuilder(imageVk, "https://vk.com/id409602224", vBoxVK);
         imageBuilder(imageGoogle, "https://myaccount.google.com/?utm_source=OGB&tab=mk&utm_medium=act", vBoxGoogle);
 
-        logger.info("stop initialize FXML " );
+        logger.info("stop initialize FXML ");
     }
 
 
@@ -52,16 +48,4 @@ public class InfoController {
         vBox.getChildren().set(0, imageV);
     }
 
-    public void aether(ActionEvent actionEvent) {
-
-    }
-
-    public void git(ActionEvent actionEvent) {
-
-    }
-
-    @FXML
-    protected void loginButtonAction(ActionEvent actionEvent) {
-
-    }
 }

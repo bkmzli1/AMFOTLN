@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.bkmz.tehSistem.Main;
 import ru.bkmz.tehSistem.util.CmdHandler;
+import ru.bkmz.tehSistem.util.Table;
 import ru.bkmz.tehSistem.util.gui.elements.ItemGetMainController;
 import ru.bkmz.tehSistem.util.gui.window.Notification;
 import ru.bkmz.tehSistem.util.gui.window.StageDialog;
@@ -22,7 +23,6 @@ import ru.bkmz.tehSistem.util.gui.window.StageDialog;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -33,16 +33,18 @@ import static ru.bkmz.tehSistem.util.CmdHandler.cmdOut;
 
 public class ControllerMain {
     public static final Logger logger = LogManager.getLogger();
-    public ListView<HBox> listIpGet;
+    public TableView<Table> tableIP;
     public TextField fileOUT;
     public TextField fileIN;
     public ComboBox discList;
     public HBox panelHboxTool;
     public AnchorPane rootAP;
-    public static Circle lite = new Circle(7);
     public CheckBox IE;
-    ;
-    ObservableList<HBox> hBoxObservableList = FXCollections.observableArrayList();
+
+    public static Circle lite = new Circle(7);
+
+
+    ObservableList<Table> hBoxObservableList = FXCollections.observableArrayList();
     ObservableList<String> AZList = FXCollections.observableArrayList();
 
     public static ItemGetMainController itemGetMainController;
@@ -56,7 +58,7 @@ public class ControllerMain {
         lite.setStroke(Color.rgb(0, 0, 0));
         lite.setStrokeWidth(1);
 
-        itemGetMainController = new ItemGetMainController(listIpGet, fileOUT, fileIN, hBoxObservableList, threads);
+        itemGetMainController = new ItemGetMainController(tableIP, fileOUT, fileIN, hBoxObservableList, threads);
         itemGetMainController.upDate();
         for (int i = 65; i <= 90; i++) {
             AZList.add(String.valueOf((char) i));
@@ -67,14 +69,15 @@ public class ControllerMain {
         discList.setItems(AZList);
         try {
             Statement statmt = bd.getConn().createStatement();
-            ResultSet resultSet = statmt.executeQuery("SELECT * FROM 'settings'");
-            discList.setValue(resultSet.getString("DISK"));
-            fileIN.setText(resultSet.getString("FILE_IN"));
-            fileOUT.setText(resultSet.getString("FILE_OUT"));
-            statmt.close();
-            resultSet.close();
-        } catch (SQLException e) {
+            ;
 
+            discList.setValue(statmt.executeQuery("SELECT * FROM 'settings' WHERE arg  = 'discList'").getString("value"));
+            fileIN.setText(statmt.executeQuery("SELECT * FROM 'settings' WHERE arg  = 'fileIN' ").getString("value"));
+            fileOUT.setText(statmt.executeQuery("SELECT * FROM 'settings' WHERE arg  = 'fileOUT' ").getString("value"));
+
+            statmt.close();
+        } catch (SQLException e) {
+            logger.error("get settings:", e);
         }
 
 
@@ -114,7 +117,7 @@ public class ControllerMain {
                                                     fileOUText);
                                     proc.waitFor();
                                     if (IE.isSelected()) {
-                                        cmdOut(proc, cbTxt + " создание папки:" + fileOUText, IE);
+                                        cmdOut(proc, cbTxt + " создание папки:" + fileOUText);
                                     }
                                     cmdHandler.cmdRun(fileIN.getText(), cbTxt, discListTxt + "$", fileOUText, IE);
 
@@ -159,7 +162,7 @@ public class ControllerMain {
 
     public void settings(ActionEvent actionEvent) {
 
-        new StageDialog("settings");
+        new StageDialog("add");
 
     }
 
@@ -168,9 +171,9 @@ public class ControllerMain {
 
         try {
             Statement statmt = bd.getConn().createStatement();
-            statmt.execute(
-                    "UPDATE settings SET FILE_OUT = '" + fileOUT.getText() + "', FILE_IN = '" + fileIN.getText() +
-                            "', DISK = '" + discList.getValue() + "' WHERE id = 1");
+            statmt.execute("UPDATE settings SET 'value' = '" + discList.getValue() + "' WHERE arg = 'discList' ");
+            statmt.execute("UPDATE settings SET 'value' = '" + fileIN.getText() + "' WHERE arg = 'fileIN' ");
+            statmt.execute("UPDATE settings SET 'value' = '" + fileOUT.getText() + "' WHERE arg = 'fileOUT' ");
             for (int i = 0; i < itemGetMainController.getCheckBoxes().size(); i++) {
                 statmt.execute("UPDATE IP SET  boll = '" +
                         String.valueOf(itemGetMainController.getCheckBoxes().get(i).isSelected()).replace("true", "1")

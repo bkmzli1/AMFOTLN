@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,13 +28,13 @@ public class Main extends Application {
     static Graphics2D g;
     static Rectangle rectangle;
     public static String FileSeve = System.getenv("APPDATA") + "\\AMFOTLN",
-            SQLFile = FileSeve + "\\AMFOTLN.sqlite";
+            SQLFile = FileSeve + "\\AMFOTLN.db";
     public static BD bd;
 
     public static void main(String[] args) throws IOException {
-        rectangle = splash.getBounds();
         g = splash.createGraphics();
-        g.setColor(Color.GREEN);
+        rectangle = splash.getBounds();
+
         logger.info("start:launch");
         launch(args);
     }
@@ -55,7 +56,7 @@ public class Main extends Application {
         } catch (Exception e) {
             logger.error("BD:", e);
         }
-        splashUP(30);
+
     }
 
     @Override
@@ -72,16 +73,10 @@ public class Main extends Application {
         Parent root = loader.getRoot();
         logger.info("stop loader FXML");
         Scene scene = new Scene(root);
-        scene.getStylesheets()
-                .add(Objects.requireNonNull(getClass().getClassLoader().getResource("css/main.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource("css/main.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(name);
-        splashUP(50);
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         InputStream inputStream = ClassLoader.class.getResourceAsStream("/img/icon.png");
         try {
             Image image = new Image(inputStream);
@@ -95,53 +90,16 @@ public class Main extends Application {
             }
         });
         Dimension sSize = Toolkit.getDefaultToolkit().getScreenSize();
-        stage.setHeight((sSize.height * 50d) / 100d);
-        stage.setWidth((sSize.width * 50d) / 100d);
+        stage.setHeight((sSize.height * 30d) / 100d);
+        stage.setWidth((sSize.width * 30d) / 100d);
         stage.setMinHeight((sSize.height * 20d) / 100d);
-        stage.setMinWidth((sSize.width * 20d) / 100d);
-        splashUP(100);
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        stage.setMinWidth((sSize.width * 20.1d) / 100d);
         splash.close();
+        stage.initStyle(StageStyle.DECORATED);
         stage.show();
 
         this.stage = stage;
         //this.follScren = stage.isMaximized();
         //stage.setResizable(resizable);
-    }
-
-    static int rootSize = 0;
-    static Thread thread;
-
-    static void splashUP(int size) {
-        thread = new Thread(new Runnable() {
-            @Override public void run() {
-                try {
-                    if (String.valueOf(thread).equals("null"))
-                        thread.join();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                for (int i = rootSize + 1; i <= size; i++) {
-                    int finalI = i;
-                    g.fillRect(0, 0, rectangle.width * finalI / 100, 10);
-                    splash.update();
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                rootSize = size;
-
-            }
-        });
-        thread.start();
-
-
-
     }
 }
