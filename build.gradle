@@ -20,7 +20,7 @@ sourceSets {
 }
 
 
-def versions = '1.1.8.8'
+def versions = '1.1.8.10'
 def name = 'AMFOTLN'
 def main = 'ru.bkmz.Main'
 def splash = 'img/fon1.gif'
@@ -48,12 +48,13 @@ launch4j {
     textVersion = versions
     launch4j.jreMinVersion("1.8.0_001")
     launch4j.fileDescription(name)
+    launch4j.jreMaxVersion("1.8.0_999")
 
     companyName = author
     copyright = author
 
     launch4j.language = 'RUSSIAN'
-    launch4j.icon = "${projectDir}/img/icon.ico"
+    launch4j.icon = "${projectDir}/img/icon (1).ico"
 
     launch4j.headerType("gui")
     internalName = name

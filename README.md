@@ -32,17 +32,17 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 :white_check_mark: Предоставить выбор функции настроек отправки xcopy   
 :white_check_mark: Обновление статуса IP        
 :white_check_mark: Описание функцый xcopy       
-:white_check_mark: запуск от имени Админестратора автоматически     
+:white_check_mark: Запуск от имени Админестратора автоматически     
+:white_check_mark: Изолировано создание папки
+:white_check_mark: Заблокировать изменение столбцов в талице   
   
 :black_square_button: Удаление Файлов\папок     
-:black_square_button: заблокировать изменение столбцов в талице   
 :black_square_button: Настройки управления                  
 :black_square_button: Установщик            
 :black_square_button: Управление ПК  (*перезагрузка, выключение(через n время),и тп*)       
 :black_square_button: Поддержка старых платформ (*xp*)      
 :black_square_button: Удаление приложений    
 :black_square_button: Установка приложений    
-
   
 :negative_squared_cross_mark: Настройка ПК      
 :negative_squared_cross_mark: удалённое управление мыши,клавиатуры ПК       

@@ -108,28 +108,6 @@
     -fx-fill: #ffffff;
 }
 
-.tooltip {
-    -fx-font-size: 15;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #002932;
-
-}
-
-.tooltip .text {
-    -fx-fill: #ff001f;
-
-}
-
-.tooltip {
-    -fx-font-size: 15;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #002932;
-}
-
-.tooltip .text {
-    -fx-fill: #ff001f;
-
-}
 
 
 .button {
@@ -140,13 +118,13 @@
 }
 
 .button:hover {
-    -fx-background-color: -my-hover-color;
+
     -fx-border-color: derive(-fx-background, -25%);
     -fx-effect: innershadow(three-pass-box, rgb(50%, 50%, 50%), 10, 0.0, 0, 1);
 }
 
 .button:armed {
-    -fx-background-color: -my-armed-color;
+
     -fx-border-color: derive(-fx-background, -50%);
     -fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), 10, 0.0, 0, 5);
 }

@@ -116,7 +116,6 @@ public class Main extends Application {
         });
         trayMenu.add(item);
         URL inputStream = ClassLoader.class.getResource("/img/icon.png");
-        System.out.println(inputStream);
         java.awt.Image icon = Toolkit.getDefaultToolkit().getImage(inputStream);
         TrayIcon trayIcon = new TrayIcon(icon, APPLICATION_NAME, trayMenu);
         trayIcon.setImageAutoSize(true);

@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -16,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import ru.bkmz.Main;
 import ru.bkmz.util.CmdHandler;
 import ru.bkmz.util.Table;
+import ru.bkmz.util.gui.elements.CustomTableView;
 import ru.bkmz.util.gui.elements.ItemGetMainController;
 import ru.bkmz.util.gui.window.Notification;
 import ru.bkmz.util.gui.window.StageDialog;
@@ -33,7 +36,8 @@ import static ru.bkmz.util.CmdHandler.cmdOut;
 
 public class ControllerMain {
     public static final Logger logger = LogManager.getLogger();
-    public TableView<Table> tableIP;
+    public CustomTableView<Table> tableIP = new CustomTableView<>();
+    ;
     public TextField fileOUT;
     public TextField fileIN;
     public ComboBox discList;
@@ -43,6 +47,7 @@ public class ControllerMain {
     public HBox inHB;
     public HBox outHB;
     public Button saveButton;
+    public VBox tabeVB;
     StageDialog auther = new StageDialog("auther", "Связь", false);
     StageDialog settings = new StageDialog("settings", "Настройка", false);
     StageDialog inf = new StageDialog("inf", "Информация", false);
@@ -58,13 +63,16 @@ public class ControllerMain {
     public static int sizeEnd = 0;
 
     public void initialize() {
+        VBox.setVgrow(tableIP, Priority.ALWAYS);
+        tableIP.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tabeVB.getChildren().add(tableIP);
         logger.info("start initialize FXML ");
         lite.setFill(Color.rgb(0, 250, 0));
 
         lite.setStroke(Color.rgb(0, 0, 0));
         lite.setStrokeWidth(1);
 
-        itemGetMainController = new ItemGetMainController(tableIP, fileOUT, fileIN, hBoxObservableList, threads, inHB, outHB, saveButton,IE);
+        itemGetMainController = new ItemGetMainController(tableIP, fileOUT, fileIN, hBoxObservableList, threads, inHB, outHB, saveButton, IE);
         itemGetMainController.upDate();
         for (int i = 65; i <= 90; i++) {
             AZList.add(String.valueOf((char) i));
@@ -129,9 +137,9 @@ public class ControllerMain {
                                             rt.exec("cmd.exe /c mkdir \\\\" + cbTxt + "\\" + discListTxt + "$\\" +
                                                     fileOUText);
                                     proc.waitFor();
-                                    if (IE.isSelected()) {
-                                        cmdOut(proc, cbTxt + " создание папки:" + fileOUText);
-                                    }
+
+                                    cmdOut(proc, cbTxt + " создание папки:" + fileOUText, IE);
+
                                     cmdHandler.cmdRun(fileIN.getText(), cbTxt, discListTxt + "$", fileOUText, IE);
 
                                 } catch (Exception e) {
@@ -268,8 +276,8 @@ public class ControllerMain {
     // dialog.setInitialDirectory(new File("\\\\192.168.0.159\\c$"));
     public void desctopIP(ActionEvent actionEvent) {
 
-        DirectoryChooser dialog = new DirectoryChooser();
 
+        DirectoryChooser dialog = new DirectoryChooser();
         boolean onen = false;
         try {
             for (CheckBox cb : itemGetMainController.getCheckBoxes()) {
