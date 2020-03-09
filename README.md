@@ -16,8 +16,7 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 [:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 # ПЛАНЫ
-:white_check_mark: Это уже сделано :negative_squared_cross_mark: Я не буду это делать :black_square_button
-: в планах  :bomb: ошибки  
+:white_check_mark: Это уже сделано :negative_squared_cross_mark: Я не буду это делать :black_square_button: в планах  :bomb: ошибки  
 
 
 
