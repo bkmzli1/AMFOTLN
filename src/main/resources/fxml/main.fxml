@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="rootAP" prefHeight="351.0" prefWidth="842.0" style="-fx-background-color: #ececec;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.bkmz.tehSistem.controller.ControllerMain">
+<AnchorPane fx:id="rootAP" prefHeight="351.0" prefWidth="842.0" style="-fx-background-color: #ececec;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.bkmz.controller.ControllerMain">
     <children>
         <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -12,20 +12,22 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Файл">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#settings" text="Добавить IP" />
+                                <MenuItem mnemonicParsing="false" onAction="#addIP" text="Добавить IP" />
                                 <MenuItem mnemonicParsing="false" onAction="#upDate" text="Обновить IP" />
+                                <MenuItem mnemonicParsing="false" onAction="#settings" text="Настройка" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Помощь">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#auther" text="Автор" />
+                                <MenuItem mnemonicParsing="false" onAction="#inf" text="Информация" />
                             </items>
                         </Menu>
                     </menus>
                 </MenuBar>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                     <children>
-                        <HBox spacing="10.0">
+                        <HBox fx:id="inHB" spacing="10.0">
                             <children>
                                 <TextField fx:id="fileIN" promptText="файл" HBox.hgrow="ALWAYS" />
                                 <Button mnemonicParsing="false" onAction="#fileDesctop" text="выбор файла" />
@@ -34,11 +36,11 @@
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
-                     <VBox.margin>
-                        <Insets left="-5.0" right="-5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets left="-5.0" right="-5.0" />
+                            </VBox.margin>
                         </HBox>
-                        <HBox spacing="10.0">
+                        <HBox fx:id="outHB" spacing="10.0">
                             <children>
                                 <ComboBox fx:id="discList" prefHeight="25.0" prefWidth="79.0" promptText="С" />
                                 <TextField fx:id="fileOUT" promptText="куда" HBox.hgrow="ALWAYS" />
@@ -48,9 +50,9 @@
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
-                     <VBox.margin>
-                        <Insets left="-5.0" right="-5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets left="-5.0" right="-5.0" />
+                            </VBox.margin>
                         </HBox>
                         <TableView fx:id="tableIP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                             <columnResizePolicy>
@@ -63,25 +65,25 @@
                                     <HBox.margin>
                                         <Insets left="5.0" />
                                     </HBox.margin>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
                                 </Button>
-                                <Button mnemonicParsing="false" onAction="#saveButton" text="сохранить параметры" />
+                                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButton" text="сохранить параметры" />
                                 <CheckBox fx:id="IE" alignment="CENTER" mnemonicParsing="false" text="уведомления" textAlignment="CENTER" />
                                 <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Button" visible="false" HBox.hgrow="ALWAYS" />
                             </children>
-                     <padding>
-                        <Insets bottom="5.0" left="-5.0" right="5.0" top="5.0" />
-                     </padding>
+                            <padding>
+                                <Insets bottom="5.0" left="-5.0" right="5.0" top="5.0" />
+                            </padding>
                         </HBox>
                     </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
                 </VBox>
             </children>
         </VBox>

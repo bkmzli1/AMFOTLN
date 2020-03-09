@@ -1,5 +1,3 @@
-
-
 plugins {
     id 'java'
     id 'edu.sc.seis.launch4j' version '2.4.6'
@@ -22,21 +20,18 @@ sourceSets {
 }
 
 
-def versions = '1.1.8.6'
+def versions = '1.1.8.8'
 def name = 'AMFOTLN'
-def main = 'ru.bkmz.tehSistem.Main'
+def main = 'ru.bkmz.Main'
 def splash = 'img/fon1.gif'
 def author = 'BkzmLitel'
 
 repositories {
     jcenter()
 }
-compileJava {
-    options.incremental = true
-    options.fork = true
-    options.failOnError = false
-    options.encoding = "UTF-8"
-}
+
+
+compileJava.options.encoding = "UTF-8"
 apply plugin: "edu.sc.seis.launch4j"
 jar.baseName = name
 jar.version(versions)

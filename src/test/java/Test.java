@@ -1,10 +1,13 @@
+import ru.bkmz.Main;
+
+import java.io.IOException;
+
 public class Test {
     @org.junit.Test
     public void test(){
-        System.out.println(123);
         try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
+            Main.main(null);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

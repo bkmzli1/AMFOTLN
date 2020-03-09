@@ -2,7 +2,7 @@ AMFOTLN
 ==========
 # СОДЕРЖАНИЕ
 1. [ВВЕДЕНИЕ](#ВВЕДЕНИЕ)
-1. [ПЛАНЫ](#ПЛАНЫ)
+1. [ПЛАНЫ](#:bookmark_tabs:-ПЛАНЫ)
 1. [УСТАНОВКА ПРОЭКТА](#УСТАНОВКА-ПРОЭКТА)
 1. [КОМПИЛЯЦИЯ ПРОЭКТА](#КОМПИЛЯЦИЯ-ПРОЭКТА)
 
@@ -15,8 +15,9 @@ AMFOTLN - это кодовое название прокат *Automatically mov
         
 [:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
-# ПЛАНЫ
-:white_check_mark: Это уже сделано :negative_squared_cross_mark: Я не буду это делать :black_square_button: в планах    
+# :bookmark_tabs: ПЛАНЫ
+:white_check_mark: Это уже сделано :negative_squared_cross_mark: Я не буду это делать :black_square_button
+: в планах  :bomb: ошибки  
 
 
 
@@ -28,17 +29,26 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 :white_check_mark: Переход на БД SQLite  
 :white_check_mark: Выбор отправки файла в локальную сеть
 :white_check_mark: Статус IP в локальную сеть
-
-:black_square_button: Предоставить выбор функции настроек отправки xcopy    
+:white_check_mark: Имя пк по IP
+:white_check_mark: Предоставить выбор функции настроек отправки xcopy  
+:white_check_mark: Обновление статуса IP  
+:white_check_mark: Описание функцый xcopy
+:white_check_mark: запуск от имени Админестратора автоматически
+  
 :black_square_button: Удаление Файлов\папок     
+:black_square_button: заблокировать изменение столбцов в талице   
 :black_square_button: Настройки управления                  
 :black_square_button: Установщик            
 :black_square_button: Управление ПК  (*перезагрузка, выключение(через n время),и тп*)       
 :black_square_button: Поддержка старых платформ (*xp*)      
 :black_square_button: Удаление приложений    
-:black_square_button: Установка приложений      
+:black_square_button: Установка приложений    
+
+  
 :negative_squared_cross_mark: Настройка ПК  
 :negative_squared_cross_mark: удалённое управление мыши,клавиатуры ПК   
+
+:bomb: Время от времени кнопки начиняют само произвольно изменять размер(причина не известна)
         
 [:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)

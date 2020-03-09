@@ -13,21 +13,6 @@
     -fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), -35, 0, 0, 0);
 }
 
-#menu {
-    -fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), -35, 0, 0, 0);
-}
-
-#text {
-    -fx-font-size: 20;
-    /* -fx-font-family: "Arial Black";*/
-
-    -fx-fill: #000000;
-    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
-    /*-fx-font-weight: 900;*/
-
-
-}
-
 .text-area {
     -fx-font-size: 15;
     /* -fx-font-family: "Arial Black";*/
@@ -123,10 +108,6 @@
     -fx-fill: #ffffff;
 }
 
-#OUT {
-
-}
-
 .tooltip {
     -fx-font-size: 15;
     -fx-background-color: #ffffff;
@@ -136,11 +117,6 @@
 
 .tooltip .text {
     -fx-fill: #ff001f;
-
-}
-
-
-#OUT {
 
 }
 
@@ -159,7 +135,6 @@
 .button {
     -fx-background-color: -fx-background;
     -fx-border-color: derive(-fx-background, -50%);
-    -fx-border-width: .6;
     -fx-border-radius: 5px;
     -fx-effect: innershadow(three-pass-box, rgb(255, 255, 255), 10, 0.0, 0, 1);
 }
@@ -167,85 +142,16 @@
 .button:hover {
     -fx-background-color: -my-hover-color;
     -fx-border-color: derive(-fx-background, -25%);
-    -fx-border-width: .55; /*Overide modena.css effect of button highlighting*/
     -fx-effect: innershadow(three-pass-box, rgb(50%, 50%, 50%), 10, 0.0, 0, 1);
 }
 
 .button:armed {
     -fx-background-color: -my-armed-color;
     -fx-border-color: derive(-fx-background, -50%);
-    -fx-border-width: .90; /*Overide modena.css effect of button highlighting*/
     -fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), 10, 0.0, 0, 5);
 }
 
 .button:disabled {
     -fx-background-color: -my-armed-color;
     -fx-border-color: #939393;
-    -fx-border-width: .0; /*Overide modena.css effect of button highlighting*/
-
-}
-
-.tab-pane *.tab-header-area *.tab-header-background {
-    -fx-background-color: transparent;
-}
-
-.tab-pane {
-
-}
-
-.tab {
-    -fx-border-radius: 2px;
-    -fx-background-color: derive(-fx-background, -25%);
-    -fx-effect: innershadow(three-pass-box, rgb(255, 255, 255), 10, 0.0, 0, 1);
-}
-
-.tab:selected {
-    -fx-translate-y: 4;
-    -fx-border-color: #000000;
-    -fx-border-width: 1;
-    -fx-background-color: derive(-fx-background, -25%);
-    -fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), 10, 0.0, 0, 1);
-}
-
-.tab:hover {
-    -fx-border-color: #000000;
-    -fx-background-color: derive(-fx-background, -25%);
-    -fx-effect: innershadow(three-pass-box, rgb(50%, 50%, 50%), 10, 0.0, 0, 1);
-}
-
-.tab:selected .text {
-    -fx-fill: #000000;
-}
-
-.table-column:hover {
-    -fx-background-color: derive(-fx-background, -25%);
-    -fx-border-color: derive(-fx-background, -30%);
-    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.49), 10, 0.0, 0, 5)
-}
-
-.table-column:selected {
-    -fx-background-color: derive(-fx-background, -25%);
-    -fx-border-color: derive(-fx-background, -30%);
-    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.49), 10, 0.0, 0, 5)
-}
-
-.choice-box:hover {
-     -fx-background-color: -my-hover-color;
-     -fx-border-color: derive(-fx-background, -25%);
-     -fx-border-width: .55; /*Overide modena.css effect of button highlighting*/
-     -fx-effect: innershadow(three-pass-box, rgb(50%, 50%, 50%), 10, 0.0, 0, 1);
- }
-
-.choice-box:armed {
-    -fx-background-color: -my-armed-color;
-    -fx-border-color: derive(-fx-background, -50%);
-    -fx-border-width: .90; /*Overide modena.css effect of button highlighting*/
-    -fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), 10, 0.0, 0, 5);
-}
-
-.choice-box:disabled {
-    -fx-background-color: -my-armed-color;
-    -fx-border-color: #939393;
-    -fx-border-width: .0; /*Overide modena.css effect of button highlighting*/
-
 }
