@@ -38,6 +38,8 @@ AMFOTLN - это кодовое название прокат *Automatically mov
   
 :black_square_button: Удаление Файлов\папок     
 :black_square_button: Настройки управления                  
+:black_square_button: Авто обновлние IP                 
+:black_square_button: Время ато обновления                 
 :black_square_button: Установщик            
 :black_square_button: Управление ПК  (*перезагрузка, выключение(через n время),и тп*)       
 :black_square_button: Поддержка старых платформ (*xp*)      
