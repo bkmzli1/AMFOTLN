@@ -2,7 +2,7 @@ AMFOTLN
 ==========
 # СОДЕРЖАНИЕ
 1. [ВВЕДЕНИЕ](#ВВЕДЕНИЕ)
-1. [ПЛАНЫ](#:bookmark_tabs:-ПЛАНЫ)
+1. [ПЛАНЫ](#ПЛАНЫ)
 1. [УСТАНОВКА ПРОЭКТА](#УСТАНОВКА-ПРОЭКТА)
 1. [КОМПИЛЯЦИЯ ПРОЭКТА](#КОМПИЛЯЦИЯ-ПРОЭКТА)
 
@@ -15,25 +15,25 @@ AMFOTLN - это кодовое название прокат *Automatically mov
         
 [:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
-# :bookmark_tabs: ПЛАНЫ
+# ПЛАНЫ
 :white_check_mark: Это уже сделано :negative_squared_cross_mark: Я не буду это делать :black_square_button
 : в планах  :bomb: ошибки  
 
 
 
-:white_check_mark: Добовление удаление IP адресов    
-:white_check_mark: Выбор на какие IP адреса отправлять файлы  
-:white_check_mark: Логирование проекта  
-:white_check_mark: Предложение выбора отправления файла\папки   
-:white_check_mark: Загрузка приложения  
-:white_check_mark: Переход на БД SQLite  
-:white_check_mark: Выбор отправки файла в локальную сеть
-:white_check_mark: Статус IP в локальную сеть
-:white_check_mark: Имя пк по IP
-:white_check_mark: Предоставить выбор функции настроек отправки xcopy  
-:white_check_mark: Обновление статуса IP  
-:white_check_mark: Описание функцый xcopy
-:white_check_mark: запуск от имени Админестратора автоматически
+:white_check_mark: Добовление удаление IP адресов       
+:white_check_mark: Выбор на какие IP адреса отправлять файлы    
+:white_check_mark: Логирование проекта      
+:white_check_mark: Предложение выбора отправления файла\папки       
+:white_check_mark: Загрузка приложения      
+:white_check_mark: Переход на БД SQLite         
+:white_check_mark: Выбор отправки файла в локальную сеть            
+:white_check_mark: Статус IP в локальную сеть       
+:white_check_mark: Имя пк по IP             
+:white_check_mark: Предоставить выбор функции настроек отправки xcopy   
+:white_check_mark: Обновление статуса IP        
+:white_check_mark: Описание функцый xcopy       
+:white_check_mark: запуск от имени Админестратора автоматически     
   
 :black_square_button: Удаление Файлов\папок     
 :black_square_button: заблокировать изменение столбцов в талице   
@@ -45,10 +45,10 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 :black_square_button: Установка приложений    
 
   
-:negative_squared_cross_mark: Настройка ПК  
-:negative_squared_cross_mark: удалённое управление мыши,клавиатуры ПК   
+:negative_squared_cross_mark: Настройка ПК      
+:negative_squared_cross_mark: удалённое управление мыши,клавиатуры ПК       
 
-:bomb: Время от времени кнопки начиняют само произвольно изменять размер(причина не известна)
+:bomb: Время от времени кнопки начиняют само произвольно изменять размер(причина не известна)       
         
 [:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
