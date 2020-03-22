@@ -36,6 +36,7 @@ public class ControllerAdd {
     ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
     public void initialize() {
+
         logger.info("start initialize FXML");
         ip4.setText("");
         ip3.setText("");
@@ -45,8 +46,8 @@ public class ControllerAdd {
         textPropertyTime(ip3, 3, 255);
         textPropertyTime(ip2, 3, 255);
         textPropertyTime(ip1, 3, 255);
-
         update();
+
         logger.info("stop initialize FXML ");
     }
 

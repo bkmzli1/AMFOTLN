@@ -32,7 +32,7 @@ public class Main extends Application {
     public static Stage stage = new Stage();
     ;
     final static String name = "AMFOTLN";
-    public static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     SplashScreen splashScreen = SplashScreen.getSplashScreen();
     public static String FileSeve = System.getenv("APPDATA") + "\\AMFOTLN",
             SQLFile = FileSeve + "\\AMFOTLN.db";

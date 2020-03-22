@@ -18,7 +18,6 @@ public class BD {
     public static final Logger logger = LogManager.getLogger();
     String[] cmdArg = {"a", "m", "s", "e", "v","i","f","l","g","h","r","t","u","k","o","z","b","j"};
     String[] cedArcBoolean = {"s","h","i"};
-    int settingsId = 1;
 
     public BD(String fileConn) throws ClassNotFoundException, SQLException {
 
@@ -58,7 +57,17 @@ public class BD {
             addIdSettings(statmt, "discList", "D");
             addIdSettings(statmt, "fileIN");
             addIdSettings(statmt, "fileOUT");
-            statmt.execute("INSERT INTO settings ('arg','value') VALUES ('settingsId','" + (settingsId + 1) + "');");
+            addIdSettings(statmt, "timeIP","10");
+            addIdSettings(statmt, "timeIpConnect","10");
+
+            statmt.execute("create table cmdArg ( " +
+                    "id INTEGER default 0 not null constraint settings_pk primary key autoincrement, " +
+                    "arg TEXT not null, " +
+                    "value BOOLEAN " +
+                    ");" +
+                    "create unique index settings_arg_uindex on cmdArg (arg); " +
+                    "create unique index settings_id_uindex on cmdArg (id);");
+
             for (String arg :
                     cmdArg) {
                 boolean b = false;
@@ -71,19 +80,11 @@ public class BD {
                 }
 
                 if (b) {
-                    statmt.execute("INSERT INTO settings ('arg','value') VALUES ('" + arg + "','" + 1 + "');");
+                    statmt.execute("INSERT INTO cmdArg ('arg','value') VALUES ('" + arg + "','" + 1 + "');");
                 } else {
-                    statmt.execute("INSERT INTO settings ('arg','value') VALUES ('" + arg + "','" + 0 + "');");
+                    statmt.execute("INSERT INTO cmdArg ('arg','value') VALUES ('" + arg + "','" + 0 + "');");
                 }
             }
-            statmt.execute("create table Inf ( " +
-                    "id INTEGER default 0 not null constraint settings_pk primary key autoincrement, " +
-                    "arg TEXT not null, " +
-                    "value TEXT " +
-                    ");" +
-                    "create unique index settings_arg_uindex on Inf (arg); " +
-                    "create unique index settings_id_uindex on Inf (id);");
-
 
             statmt.close();
         } catch (Exception e) {
@@ -95,7 +96,7 @@ public class BD {
     void addIdSettings(Statement statmt, String arg, String value) {
         try {
             statmt.execute("INSERT INTO settings ('arg','value') VALUES ('" + arg + "','" + value + "');");
-            settingsId++;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -105,15 +106,12 @@ public class BD {
     void addIdSettings(Statement statmt, String arg) {
         try {
             statmt.execute("INSERT INTO settings ('arg','value') VALUES ('" + arg + "','');");
-            settingsId++;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    public int getSettingsId() {
-        return settingsId;
-    }
 }
 

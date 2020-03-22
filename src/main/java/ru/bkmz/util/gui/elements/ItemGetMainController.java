@@ -10,12 +10,16 @@ import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.bkmz.Main;
+import ru.bkmz.util.Decoder;
+import ru.bkmz.util.RunTime;
 import ru.bkmz.util.Table;
 
 import java.net.InetAddress;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import static ru.bkmz.Main.bd;
 
 public class ItemGetMainController {
     private static final Logger logger = LogManager.getLogger();
@@ -31,7 +35,9 @@ public class ItemGetMainController {
     ArrayList<String> ips = new ArrayList<>();
     ArrayList<CheckBox> checkBoxes = new ArrayList<>();
     ArrayList<Text> textsConn = new ArrayList<>();
-
+    public static ArrayList<Thread> threadsIP = new ArrayList<>();
+    boolean thenB = true;
+    int allRuThread;
 
     public ItemGetMainController(TableView<Table> tableIP, TextField fileOUT, TextField fileIN, ObservableList<Table> hBoxObservableList, ArrayList<Thread> threads, HBox inHB, HBox outHB,
                                  Button saveButton, CheckBox IE) {
@@ -68,9 +74,15 @@ public class ItemGetMainController {
     }
 
     public void upDate() {
+        RunTime runTime = new RunTime();
+        logger.trace("upDate start");
         checkBoxes.clear();
         tableOList.clear();
         textsConn.clear();
+        thenB = false;
+        threadIPStop();
+
+        thenB = true;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -87,25 +99,39 @@ public class ItemGetMainController {
 
                         Table table = new Table(checkBox, resultSet.getString("name"));
                         tableOList.add(table);
-                        new Thread(new Runnable() {
+                        Thread tIp = new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                try {
-                                    boolean con = InetAddress.getByName(ip).isReachable(1000);
-                                    Platform.runLater(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (con) {
-                                                table.setCircleValue(Color.color(0, 1, 0));
-                                            } else {
-                                                table.setCircleValue(Color.color(1, 0, 0));
+                                while (thenB) {
+                                    table.setCircleValue(Color.color(1, 1, 0));
+                                    try {
+                                        boolean con = InetAddress.getByName(ip).isReachable(
+                                                Integer.parseInt(bd.getConn().createStatement().executeQuery("SELECT * FROM 'settings' where arg = 'timeIpConnect'").getString("value")) * 1000);
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+
+                                                if (con) {
+                                                    table.setCircleValue(Color.color(0, 1, 0));
+                                                } else {
+                                                    table.setCircleValue(Color.color(1, 0, 0));
+                                                }
                                             }
+                                        });
+                                        allRuThread++;
+                                        while (allRuThread < threadsIP.size()) {
+                                            Thread.sleep(500);
                                         }
-                                    });
-                                } catch (Exception e) {
+                                        Thread.sleep(Integer.parseInt(bd.getConn().createStatement().executeQuery("SELECT * FROM 'settings' where arg = 'timeIP'").getString("value")) * 1000);
+                                    } catch (Exception e) {
+                                        logger.warn("IP update", e);
+                                    }
+
                                 }
                             }
-                        }).start();
+                        }, "TIP :" + ip);
+                        tIp.start();
+                        threadsIP.add(tIp);
                         checkBoxes.add(checkBox);
 
                         Platform.runLater(new Runnable() {
@@ -123,7 +149,26 @@ public class ItemGetMainController {
 
             }
         }, "upDate").start();
+        logger.trace("upDate stop");
+        runTime.stop("обновление таблицы");
+    }
 
+    private void threadIPStop() {
+        for (Thread t :
+                threadsIP) {
+            try {
+                t.stop();
+                logger.trace("stop " + t.getName());
+            } catch (Exception e) {
+                try {
+                    t.join();
+                    logger.trace("join " + t.getName());
+                } catch (InterruptedException ex) {
+                    logger.warn("stop Thread Ip", ex);
+                }
+
+            }
+        }
     }
 
     public void addList(String ip) {

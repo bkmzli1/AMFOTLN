@@ -30,8 +30,8 @@
                         <HBox fx:id="inHB" spacing="10.0">
                             <children>
                                 <TextField fx:id="fileIN" promptText="файл" HBox.hgrow="ALWAYS" />
-                                <Button mnemonicParsing="false" onAction="#fileDesctop" text="выбор файла" />
-                                <Button mnemonicParsing="false" onAction="#desctop" text="выбрать папку" />
+                                <Button mnemonicParsing="false" onAction="#fileDesctop" text="выбор файла" HBox.hgrow="ALWAYS" />
+                                <Button mnemonicParsing="false" onAction="#desctop" text="выбрать папку" HBox.hgrow="ALWAYS" />
                             </children>
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -44,8 +44,8 @@
                             <children>
                                 <ComboBox fx:id="discList" prefHeight="25.0" prefWidth="79.0" promptText="С" />
                                 <TextField fx:id="fileOUT" promptText="куда" HBox.hgrow="ALWAYS" />
-                                <Button mnemonicParsing="false" onAction="#fileDesctopIP" text="выбор файла" />
-                                <Button mnemonicParsing="false" onAction="#desctopIP" text="выбрать папку" />
+                                <Button mnemonicParsing="false" onAction="#fileDesctopIP" text="выбор файла" HBox.hgrow="ALWAYS" />
+                                <Button mnemonicParsing="false" onAction="#desctopIP" text="выбрать папку" HBox.hgrow="ALWAYS" />
                             </children>
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
