@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="identifier.sqlite" uuid="21d4ad5a-3186-49fe-834d-f2a3fa124a00">
+    <data-source source="LOCAL" name="AMFOTLN.db" uuid="dc688c75-eb34-4c85-9c86-ff9fdd7bf031">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:identifier.sqlite</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="AMFOTLN.db" uuid="97f3631d-f31e-4c8f-83b5-f508237b6391">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Администратор\AppData\Roaming\AMFOTLN\AMFOTLN.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$USER_HOME$/AppData/Roaming/AMFOTLN/AMFOTLN.db</jdbc-url>
     </data-source>
   </component>
 </project>

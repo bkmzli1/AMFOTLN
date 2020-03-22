@@ -38,18 +38,21 @@ AMFOTLN - это кодовое название прокат *Automatically mov
 :white_check_mark: Авто обновлние IP      
 :white_check_mark: Время авто обновления    
 :white_check_mark: Настройки управления xcopy    
-           
+:white_check_mark: Переход на Kotlin  
+
+
+
 :black_square_button: Удаление Файлов\папок            
 :black_square_button: Установщик            
 :black_square_button: Управление ПК  (*перезагрузка, выключение(через n время),и тп*)       
 :black_square_button: Поддержка старых платформ (*xp*)      
 :black_square_button: Удаление приложений    
 :black_square_button: Установка приложений    
-  
+
+
+
 :negative_squared_cross_mark: Настройка ПК      
 :negative_squared_cross_mark: удалённое управление мыши,клавиатуры ПК       
-
-:bomb: Время от времени кнопки начиняют само произвольно изменять размер(причина не известна)       
         
 [:arrow_up:СОДЕРЖАНИЕ](#СОДЕРЖАНИЕ)
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)

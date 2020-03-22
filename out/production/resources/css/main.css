@@ -1,0 +1,135 @@
+.root {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -my-highlight-color: rgba(0, 0, 0, 0);
+    -my-hover-color: derive(-fx-background, -15%);
+    -my-armed-color: derive(-fx-background, -27%);
+    rootColor: #7b7d7b;
+    qubitColor: white;
+    icon-color: #636563;
+}
+
+.menu-bar {
+    -fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), -35, 0, 0, 0);
+}
+
+.text-area {
+    -fx-font-size: 15;
+    /* -fx-font-family: "Arial Black";*/
+
+    -fx-fill: #000000;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
+    /*-fx-font-weight: 900;*/
+
+
+}
+
+.text-field {
+    -fx-font-size: 15;
+    /* -fx-font-family: "Arial Black";*/
+
+    -fx-fill: #000000;
+    /*-fx-font-weight: 900;*/
+
+}
+
+.text {
+    -fx-font-size: 15;
+    /* -fx-font-family: "Arial Black";*/
+
+    -fx-fill: #000000;
+    /*-fx-font-weight: 900;*/
+
+}
+
+.menu-bar {
+
+    -fx-font-size: 15;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #373737;
+    -fx-effect: innershadow(three-pass-box, rgb(143, 143, 143), 50, 0, 0, 5);
+}
+
+.menu-bar .text {
+    -fx-font-size: 15;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #000000;
+
+}
+
+.menu:hover {
+    -fx-background-color: #ffffff;
+
+}
+
+.menu:disabled {
+    -fx-background-color: #ffffff;
+
+}
+
+.menu:selected {
+    -fx-background-color: #ffffff;
+
+}
+
+.menu:focused {
+    -fx-background-color: #ffffff;
+
+}
+
+.menu:armed {
+    -fx-background-color: #ffffff;
+
+}
+
+.menu:default {
+    -fx-background-color: #ffffff;
+
+}
+
+.menu-item:hover {
+    -fx-background-color: #000000;
+
+}.menu-item {
+     /*-fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), 50, 0, 0, 5);*/
+
+}
+.menu-item:hover .text  {
+    -fx-fill: #ffffff;
+
+}
+.menu-item:selected .text{
+    -fx-background-color: #ffffff;
+    -fx-fill: #ffffff;
+}
+
+.menu-item:armed .text{
+    -fx-background-color: #ffffff;
+    -fx-fill: #ffffff;
+}
+
+
+
+.button {
+    -fx-background-color: -fx-background;
+    -fx-border-color: derive(-fx-background, -50%);
+    -fx-border-radius: 5px;
+    -fx-effect: innershadow(three-pass-box, rgb(255, 255, 255), 10, 0.0, 0, 1);
+}
+
+.button:hover {
+
+    -fx-border-color: derive(-fx-background, -25%);
+    -fx-effect: innershadow(three-pass-box, rgb(50%, 50%, 50%), 10, 0.0, 0, 1);
+}
+
+.button:armed {
+
+    -fx-border-color: derive(-fx-background, -50%);
+    -fx-effect: innershadow(three-pass-box, rgb(0, 0, 0), 10, 0.0, 0, 5);
+}
+
+.button:disabled {
+    -fx-background-color: -my-armed-color;
+    -fx-border-color: #939393;
+}
